@@ -1,50 +1,76 @@
 <?php
-include "Conf.class.php";
-require_once 'Medoo.php';
+namespace App\Wiki;
+use App\X\X;
 use Medoo\Medoo;
-$conf = new Conf();
-$database = new medoo([
-    'database_type' => 'mysql',
-    'database_name' => $conf::$dbname,
-    'server' => $conf::$servername,
-    'username' => $conf::$username,
-    'password' => $conf::$password,
-    'charset' => 'utf8mb4',
-    'collation' => 'utf8mb4_general_ci',
-]);
+use App\Conf\Conf;
 
-class wiki
+class Wiki
 {
-    private $conf;
     private $database;
 
+    /**
+     * wiki constructor.
+     */
     public function __construct()
     {
-        $this->conf = $GLOBALS["conf"];
-        $this->database = $GLOBALS["database"];
+        $this->database = new medoo([
+            'database_type' => 'mysql',
+            'database_name' => Conf::$dbname,
+            'server' => Conf::$servername,
+            'username' => Conf::$username,
+            'password' => Conf::$password,
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_general_ci',
+        ]);
     }
 
+    /**
+     * @param $action
+     * User: youranreus
+     * Date: 2020/12/23 10:26
+     */
+    public function go($action)
+    {
+        echo json_encode($this->$action());
+    }
+
+
+    /**
+     * @return mixed
+     * User: youranreus
+     * Date: 2020/12/22 18:55
+     */
     public function getWikiList(){
         if(isset($_GET['cate'])){
             $Wikis = $this->database->select("wiki",["id","title","cate","date"], [
                 "cate" => $_GET["cate"]
             ]);
-            exit(json_encode($Wikis));
+            return $Wikis;
         }
         $Wikis = $this->database->select("wiki", "*");
-        exit(json_encode($Wikis));
+        return $Wikis;
     }
 
+    /**
+     * @return string[]
+     * User: youranreus
+     * Date: 2020/12/22 18:55
+     */
     public function getWikiDetail(){
         if(!isset($_GET['id'])){
-            exit(json_encode(array("msg"=>"ID确实")));
+            return array("msg"=>"ID确实");
         }
         $Wiki = $this->database->select("wiki","*", [
             "id" => $_GET["id"]
         ]);
-        exit(json_encode($Wiki));
+        return $Wiki;
     }
 
+    /**
+     * @return array
+     * User: youranreus
+     * Date: 2020/12/22 18:55
+     */
     public function postWiki(){
 
         $this->accessCheck("post");
@@ -62,9 +88,14 @@ class wiki
             "contents"=>$_POST["contents"],
         ]);
 
-        exit(json_encode(array("msg"=>"ok","id"=>$this->database->id())));
+        return array("msg"=>"ok","id"=>$this->database->id());
     }
 
+    /**
+     * @return array
+     * User: youranreus
+     * Date: 2020/12/22 18:55
+     */
     public function deleteWiki(){
 
         $this->accessCheck("get");
@@ -77,29 +108,39 @@ class wiki
             "id" => $_GET["id"]
         ]);
 
-        exit(json_encode(array("msg"=>"ok","rows"=>$action->rowCount())));
+        return array("msg"=>"ok","rows"=>$action->rowCount());
     }
 
+    /**
+     * User: youranreus
+     * Date: 2020/12/21 23:42
+     */
     public function test(){
         echo date("yy-m-d");
     }
 
+    /**
+     * @param $method
+     * @return string[]
+     * User: youranreus
+     * Date: 2020/12/22 18:55
+     */
     private function accessCheck($method){
 
         if($method == 'get'){
             if(!isset($_GET["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
+                return array("msg"=>"数据缺失");
             }
-            if($_GET["key"]!=$this->conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
+            if($_GET["key"]!=Conf::$key){
+                return array("msg"=>"密钥错误错误");
             }
         }
         if($method == 'post'){
             if(!isset($_POST["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
+                return array("msg"=>"数据缺失");
             }
-            if($_POST["key"]!=$this->conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
+            if($_POST["key"]!=Conf::$key){
+                return array("msg"=>"密钥错误错误");
             }
         }
 

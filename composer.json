@@ -1,0 +1,23 @@
+{
+    "name": "youranreus/homepod",
+    "authors": [
+        {
+            "name": "季悠然",
+            "email": "youranreus@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "App"
+        }
+    },
+  "require": {
+    "ext-json": "*",
+    "catfan/medoo": "^1.7",
+    "noahbuscher/macaw": "dev-master",
+    "ext-mysqli": "*",
+    "ext-curl": "*",
+    "ext-xml": "*"
+  }
+
+}
