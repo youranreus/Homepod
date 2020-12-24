@@ -14,7 +14,6 @@
   "require": {
     "ext-json": "*",
     "catfan/medoo": "^1.7",
-    "noahbuscher/macaw": "dev-master",
     "ext-mysqli": "*",
     "ext-curl": "*",
     "ext-xml": "*"

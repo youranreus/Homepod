@@ -19,13 +19,22 @@ class R
      */
     public function __construct()
     {
+        $this->YRouter();
+    }
+
+    /**
+     * User: youranreus
+     * Date: 2020/12/23 11:30
+     */
+    public function YRouter()
+    {
         $temp = '';
         if(isset($_SERVER["QUERY_STRING"])){
             $temp = $_SERVER["QUERY_STRING"];
         }
-        
+
         $this->url = explode("/",$temp);
-        if($this->url[1] == ' ')
+        if($this->url[1] == '')
         {
             echo "这里是".Conf::$ServiceName;
         }
@@ -39,12 +48,14 @@ class R
         }
     }
 
-
+    /**
+     * User: youranreus
+     * Date: 2020/12/23 11:31
+     */
     public function TakeAction()
     {
         $this->class = self::router[$this->class];
-
-        var_dump(call_user_func(array('App\\'.$this->class, $this->action)));
+        call_user_func_array(array('App\\'.$this->class, 'go'), array($this->action));
     }
 
 

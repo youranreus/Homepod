@@ -2,7 +2,6 @@
 namespace App\X;
 use App\Conf\Conf;
 use mysqli;
-
 error_reporting(0);
 
 
@@ -13,7 +12,7 @@ class X
 
     public function __construct()
     {
-//        echo "yo";
+
     }
 
     /**
@@ -21,17 +20,23 @@ class X
      * User: youranreus
      * Date: 2020/12/22 15:53
      */
-    public function go($action)
+    public static function go($action)
     {
-        echo json_encode($this->$action());
+        $X = new X();
+        if(!is_bool($X->$action()))
+        {
+            echo json_encode($X->$action());
+        }
+        exit();
     }
 
     /**
      * User: youranreus
      * Date: 2020/12/21 23:40
      */
-    public function hello(){
-        echo "这里是".Conf::$ServiceName;
+    public function hello(): string
+    {
+        return "这里是".Conf::$ServiceName;
     }
 
     /**
@@ -39,7 +44,8 @@ class X
      * User: youranreus
      * Date: 2020/12/22 18:53
      */
-    public function status(){
+    public function status(): array
+    {
         $status = array(
             "msg"=>"有点问题额",
             "DB"=>"DOWN",
@@ -59,7 +65,8 @@ class X
      * User: youranreus
      * Date: 2020/12/21 23:41
      */
-    public function DBCheck(){
+    private function DBCheck(): bool
+    {
         $conn = new mysqli(Conf::$servername, Conf::$username, Conf::$password);
         // 检测连接
         if ($conn->connect_error) {
@@ -73,7 +80,8 @@ class X
      * User: youranreus
      * Date: 2020/12/21 23:41
      */
-    public function WebsiteCheck(){
+    public function WebsiteCheck(): array
+    {
 
         $websiteStatus = array();
         $n = count(Conf::$websites);
@@ -103,7 +111,8 @@ class X
      * User: youranreus
      * Date: 2020/12/22 18:52
      */
-    public function getSites(){
+    public function getSites(): array
+    {
 
         return Conf::$websites;
 
@@ -114,7 +123,8 @@ class X
      * User: youranreus
      * Date: 2020/12/22 18:52
      */
-    public function getBlogRSS(){
+    public function getBlogRSS(): array
+    {
 
         $buff = "";
         $result = array();

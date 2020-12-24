@@ -3,6 +3,7 @@ namespace App\Wiki;
 use App\X\X;
 use Medoo\Medoo;
 use App\Conf\Conf;
+error_reporting(0);
 
 class Wiki
 {
@@ -29,9 +30,14 @@ class Wiki
      * User: youranreus
      * Date: 2020/12/23 10:26
      */
-    public function go($action)
+    public static function go($action)
     {
-        echo json_encode($this->$action());
+        $Wiki = new Wiki();
+        if(!is_bool($Wiki->$action()))
+        {
+            echo json_encode($Wiki->$action());
+        }
+        exit();
     }
 
 
