@@ -34,7 +34,7 @@ class X
      * User: youranreus
      * Date: 2020/12/21 23:40
      */
-    public function hello(): string
+    private function hello(): string
     {
         return "这里是".Conf::$ServiceName;
     }
@@ -107,7 +107,7 @@ class X
 
 
     /**
-     * @return \string[][]
+     * @return string[][]
      * User: youranreus
      * Date: 2020/12/22 18:52
      */
@@ -126,15 +126,9 @@ class X
     public function getBlogRSS(): array
     {
 
-        $buff = "";
         $result = array();
 
-
-        $fp = fopen($_GET["url"], "r") or die("无法打开该网站Feed");
-        while (!feof($fp)) {
-            $buff .= fgets($fp, 4096);
-        }
-        fclose($fp);
+        $buff= file_get_contents($_GET["url"]) or die("无法打开该网站Feed");
 
         $parser = xml_parser_create();
         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);

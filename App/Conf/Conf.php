@@ -12,8 +12,7 @@ namespace App\Conf {
         static $websites = [
             array("博客","https://gundam.exia.xyz"),
             array("博客新手村","https://imouto.tech"),
-            array("个人主页","https://xn--18su5j71q.space"),
-            array("小卖部","https://shop.imouto.tech")
+            array("个人主页","https://xn--18su5j71q.space")
         ];
 
         //db setting
