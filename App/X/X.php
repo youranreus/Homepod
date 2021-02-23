@@ -127,8 +127,14 @@ class X
     {
 
         $result = array();
+        $stream_opts = [
+            "ssl" => [
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ];
 
-        $buff= file_get_contents($_GET["url"]) or die("无法打开该网站Feed");
+        $buff= file_get_contents($_GET["url"],false, stream_context_create($stream_opts)) or die("无法打开该网站Feed");
 
         $parser = xml_parser_create();
         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
