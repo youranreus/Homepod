@@ -23,7 +23,8 @@ namespace App\Conf {
 
         //function setting
         static $enableReg = true;
-
+        static $enableCache = true;
+        static $cacheDir = "cache";
 
         //other setting
         //...

@@ -16,7 +16,8 @@
     "catfan/medoo": "^1.7",
     "ext-mysqli": "*",
     "ext-curl": "*",
-    "ext-xml": "*"
+    "ext-xml": "*",
+    "ext-iconv": "*"
   }
 
 }

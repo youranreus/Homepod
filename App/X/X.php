@@ -1,6 +1,7 @@
 <?php
 namespace App\X;
 use App\Conf\Conf;
+use App\X\cache;
 use mysqli;
 error_reporting(0);
 
@@ -8,11 +9,11 @@ error_reporting(0);
 class X
 {
     public $UserAgent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.04506; .NET CLR 3.5.21022; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
-
+    public $cache;
 
     public function __construct()
     {
-
+        $this->cache = new cache();
     }
 
     /**
@@ -23,9 +24,10 @@ class X
     public static function go($action)
     {
         $X = new X();
-        if(!is_bool($X->$action()))
+        $result = $X->$action();
+        if(!is_bool($result))
         {
-            echo json_encode($X->$action());
+            echo json_encode($result);
         }
         exit();
     }
@@ -113,70 +115,79 @@ class X
      */
     public function getSites(): array
     {
-
         return Conf::$websites;
-
     }
 
     /**
-     * @return array
+     * @return array|string
      * User: youranreus
      * Date: 2020/12/22 18:52
      */
-    public function getBlogRSS(): array
+    public function getBlogRSS()
     {
-
         $result = array();
-        $stream_opts = [
-            "ssl" => [
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ]
-        ];
+        if(!isset($_GET["url"]))
+        {
+            return "请输入url";
+        }
+        if((isset($_GET["type"]) && $_GET["type"] == "force") || !$this->cache->haveCache(md5($_GET["url"])))
+        {
+            $stream_opts = [
+                "ssl" => [
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ]
+            ];
 
-        $buff= file_get_contents($_GET["url"],false, stream_context_create($stream_opts)) or die("无法打开该网站Feed");
+            $buff= file_get_contents($_GET["url"],false, stream_context_create($stream_opts)) or die("无法打开该网站Feed");
 
-        $parser = xml_parser_create();
-        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-        xml_parse_into_struct($parser, $buff, $values, $idx);
-        xml_parser_free($parser);
+            $parser = xml_parser_create();
+            xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+            xml_parse_into_struct($parser, $buff, $values, $idx);
+            xml_parser_free($parser);
 
-        foreach ($values as $val) {
+            foreach ($values as $val) {
 
-            $tag = $val["tag"];
-            $type = $val["type"];
-            $value = $val["value"];
-            $tag = strtolower($tag);
+                $tag = $val["tag"];
+                $type = $val["type"];
+                $value = $val["value"];
+                $tag = strtolower($tag);
 
 
-            if ($tag == "item" && $type == "open") {
-                $is_item = 1;
-            } else if ($tag == "item" && $type == "close") {
-                $is_item = 0;
-            }
-            //仅读取item标签中的内容
-            if ($is_item == 1) {
-                if ($tag == "title") {
-                    $result[]["title"] = $value;
+                if ($tag == "item" && $type == "open") {
+                    $is_item = 1;
+                } else if ($tag == "item" && $type == "close") {
+                    $is_item = 0;
                 }
-                if ($tag == "link") {
-                    $result[]["link"] = $value;
+                //仅读取item标签中的内容
+                if ($is_item == 1) {
+                    if ($tag == "title") {
+                        $result[]["title"] = $value;
+                    }
+                    if ($tag == "link") {
+                        $result[]["link"] = $value;
+                    }
                 }
             }
+
+            $resultNum = count($result);
+            for($i = 0;$i<$resultNum;$i++){
+                if($i % 2 == 0){
+                    $result[$i]["title"] = html_entity_decode($result[$i]["title"], ENT_QUOTES);
+                    $result[$i] = array_merge($result[$i],$result[$i+1]);
+                }else{
+                    unset($result[$i]);
+                }
+            }
+            //写入缓存
+            $this->cache->newCache(md5($_GET["url"]));
+            $this->cache->writeCache(md5($_GET["url"]), $result);
+            //输出结果
+            return $result;
         }
 
-        $resultNum = count($result);
-        for($i = 0;$i<$resultNum;$i++){
-            if($i % 2 == 0){
-                $result[$i]["title"] = html_entity_decode($result[$i]["title"], ENT_QUOTES);
-                $result[$i] = array_merge($result[$i],$result[$i+1]);
-            }else{
-                unset($result[$i]);
-            }
-        }
-        //输出结果
-        return $result;
-
+        $result = $this->cache->readCache(md5($_GET["url"]));
+        return json_decode($result);
     }
 
 

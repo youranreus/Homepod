@@ -11,7 +11,8 @@ class R
     private $action = '';
     private const router = array(
         "X"=>"X\X",
-        "wiki"=>"Wiki\Wiki"
+        "wiki"=>"Wiki\Wiki",
+        "cache"=>"X\cache"
     );
 
     /**
