@@ -1,6 +1,6 @@
 <?php
 namespace App\Wiki;
-use App\X\X;
+use App\Core\X;
 use Medoo\Medoo;
 use App\Conf\Conf;
 error_reporting(0);
@@ -33,9 +33,10 @@ class Wiki
     public static function go($action)
     {
         $Wiki = new Wiki();
-        if(!is_bool($Wiki->$action()))
+        $result = $Wiki->$action();
+        if(!is_bool($result))
         {
-            echo json_encode($Wiki->$action());
+            echo json_encode($result);
         }
         exit();
     }

@@ -17,7 +17,8 @@
     "ext-mysqli": "*",
     "ext-curl": "*",
     "ext-xml": "*",
-    "ext-iconv": "*"
+    "ext-iconv": "*",
+    "ext-pdo": "*"
   }
 
 }

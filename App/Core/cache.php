@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\X;
+namespace App\Core;
 use App\Conf\Conf;
 
 class cache

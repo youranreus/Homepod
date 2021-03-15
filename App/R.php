@@ -10,9 +10,10 @@ class R
     private $class = '';
     private $action = '';
     private const router = array(
-        "X"=>"X\X",
+        "X"=>"Core\X",
         "wiki"=>"Wiki\Wiki",
-        "cache"=>"X\cache"
+        "cache"=>"Core\cache",
+        "item"=>"ItemManager\ItemManager"
     );
 
     /**

@@ -1,7 +1,7 @@
 <?php
-namespace App\X;
+namespace App\Core;
 use App\Conf\Conf;
-use App\X\cache;
+use App\Core\cache;
 use mysqli;
 error_reporting(0);
 
