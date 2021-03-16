@@ -47,9 +47,8 @@ class ItemManager
     }
 
     /**
-     * @return int|mixed|string|null
      * User: youranreus
-     * Date: 2021/3/4 16:29
+     * Date: 2021/3/16 14:45
      */
     public function addItem()
     {
@@ -78,27 +77,26 @@ class ItemManager
                 "price" => $_GET["price"]
             ]);
 
-            return $this->database->id();
+            exit(json_encode($this->database->id()));
         }
         
-        return "参数缺失";
+        exit(json_encode("参数缺失"));
     }
 
     /**
-     * @return array|false|string
      * User: youranreus
-     * Date: 2021/3/14 21:34
+     * Date: 2021/3/16 14:46
      */
-    private function getItem()
+    public function getItem()
     {
         if(isset($_GET["id"]))
         {
-            return $this->database->select("item", "*", [
+            exit(json_encode($this->database->select("item", "*", [
                 "id" => $_GET["id"]
-            ]);
+            ])));
         }
 
-        return "参数缺失";
+        exit(json_encode("参数缺失"));
     }
 
 }

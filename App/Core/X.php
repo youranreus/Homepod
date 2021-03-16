@@ -36,17 +36,16 @@ class X
      * User: youranreus
      * Date: 2020/12/21 23:40
      */
-    private function hello(): string
+    private function hello()
     {
-        return "这里是".Conf::$ServiceName;
+        exit(json_encode("这里是".Conf::$ServiceName));
     }
 
     /**
-     * @return array
      * User: youranreus
-     * Date: 2020/12/22 18:53
+     * Date: 2021/3/15 23:18
      */
-    public function status(): array
+    public function status()
     {
         $status = array(
             "msg"=>"有点问题额",
@@ -59,7 +58,7 @@ class X
             $status["msg"]="状态良好~";
         }
 
-        return $status;
+        exit(json_encode($status));
     }
 
     /**
@@ -80,7 +79,7 @@ class X
     /**
      * @return array
      * User: youranreus
-     * Date: 2020/12/21 23:41
+     * Date: 2021/3/16 14:33
      */
     public function WebsiteCheck(): array
     {
@@ -109,26 +108,24 @@ class X
 
 
     /**
-     * @return string[][]
      * User: youranreus
-     * Date: 2020/12/22 18:52
+     * Date: 2021/3/15 23:19
      */
-    public function getSites(): array
+    public function getSites()
     {
-        return Conf::$websites;
+        exit(json_encode(Conf::$websites));
     }
 
     /**
-     * @return array|string
      * User: youranreus
-     * Date: 2020/12/22 18:52
+     * Date: 2021/3/16 14:19
      */
     public function getBlogRSS()
     {
         $result = array();
         if(!isset($_GET["url"]))
         {
-            return "请输入url";
+            exit(json_decode("请输入url"));
         }
         if((isset($_GET["type"]) && $_GET["type"] == "force") || !$this->cache->haveCache(md5($_GET["url"])))
         {
@@ -145,6 +142,7 @@ class X
             xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
             xml_parse_into_struct($parser, $buff, $values, $idx);
             xml_parser_free($parser);
+
 
             foreach ($values as $val) {
 
@@ -169,7 +167,6 @@ class X
                     }
                 }
             }
-
             $resultNum = count($result);
             for($i = 0;$i<$resultNum;$i++){
                 if($i % 2 == 0){
@@ -183,11 +180,11 @@ class X
             $this->cache->newCache(md5($_GET["url"]));
             $this->cache->writeCache(md5($_GET["url"]), $result);
             //输出结果
-            return $result;
+            exit(json_encode($result));
         }
 
         $result = $this->cache->readCache(md5($_GET["url"]));
-        return json_decode($result);
+        exit(json_encode($result));
     }
 
 

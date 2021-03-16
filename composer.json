@@ -18,7 +18,8 @@
     "ext-curl": "*",
     "ext-xml": "*",
     "ext-iconv": "*",
-    "ext-pdo": "*"
-  }
-
+    "ext-pdo": "*",
+    "noahbuscher/macaw": "dev-master"
+  },
+  "description": ""
 }

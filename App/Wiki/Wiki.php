@@ -43,19 +43,18 @@ class Wiki
 
 
     /**
-     * @return mixed
      * User: youranreus
-     * Date: 2020/12/22 18:55
+     * Date: 2021/3/16 14:52
      */
     public function getWikiList(){
         if(isset($_GET['cate'])){
             $Wikis = $this->database->select("wiki",["id","title","cate","date"], [
                 "cate" => $_GET["cate"]
             ]);
-            return $Wikis;
+            exit(json_encode($Wikis));
         }
         $Wikis = $this->database->select("wiki", "*");
-        return $Wikis;
+        exit(json_encode($Wikis));
     }
 
     /**
@@ -65,12 +64,12 @@ class Wiki
      */
     public function getWikiDetail(){
         if(!isset($_GET['id'])){
-            return array("msg"=>"ID确实");
+            exit(json_encode(array("msg"=>"ID缺失")));
         }
         $Wiki = $this->database->select("wiki","*", [
             "id" => $_GET["id"]
         ]);
-        return $Wiki;
+        exit(json_encode($Wiki));
     }
 
     /**
@@ -95,13 +94,12 @@ class Wiki
             "contents"=>$_POST["contents"],
         ]);
 
-        return array("msg"=>"ok","id"=>$this->database->id());
+        exit(json_encode(array("msg"=>"ok","id"=>$this->database->id())));
     }
 
     /**
-     * @return array
      * User: youranreus
-     * Date: 2020/12/22 18:55
+     * Date: 2021/3/16 14:49
      */
     public function deleteWiki(){
 
@@ -115,7 +113,7 @@ class Wiki
             "id" => $_GET["id"]
         ]);
 
-        return array("msg"=>"ok","rows"=>$action->rowCount());
+        exit(json_encode(array("msg"=>"ok","rows"=>$action->rowCount())));
     }
 
     /**
@@ -128,26 +126,25 @@ class Wiki
 
     /**
      * @param $method
-     * @return string[]
      * User: youranreus
-     * Date: 2020/12/22 18:55
+     * Date: 2021/3/16 14:48
      */
     private function accessCheck($method){
 
         if($method == 'get'){
             if(!isset($_GET["key"])){
-                return array("msg"=>"数据缺失");
+                exit(json_encode(array("msg"=>"数据缺失")));
             }
             if($_GET["key"]!=Conf::$key){
-                return array("msg"=>"密钥错误错误");
+                exit(json_encode(array("msg"=>"密钥错误错误")));
             }
         }
         if($method == 'post'){
             if(!isset($_POST["key"])){
-                return array("msg"=>"数据缺失");
+                exit(json_encode(array("msg"=>"数据缺失")));
             }
             if($_POST["key"]!=Conf::$key){
-                return array("msg"=>"密钥错误错误");
+                exit(json_encode(array("msg"=>"密钥错误错误")));
             }
         }
 
