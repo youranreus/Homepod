@@ -32,14 +32,21 @@ class R
         Macaw::get('X/getSites', 'App\Core\X@getSites');
         Macaw::get('X/getBlogRSS', 'App\Core\X@getBlogRSS');
 
-        Macaw::get('item/getItem', 'App\ItemManager\ItemManager@getItem');
+        Macaw::get('item/getItem/(:num)', 'App\ItemManager\ItemManager@getItem');
         Macaw::get('item/addItem', 'App\ItemManager\ItemManager@addItem');
+        Macaw::get('item/updateItem/(:num)', 'App\ItemManager\ItemManager@updateItem');
+        Macaw::get('item/getItemList/(:num)','App\ItemManager\ItemManager@getItemList');
+        Macaw::get('item/search/(:any)','App\ItemManager\ItemManager@search');
+
 
         Macaw::post('wiki/postWiki', 'App\Wiki\Wiki@postWiki');
         Macaw::get('wiki/getWikiList', 'App\Wiki\Wiki@getWikiList');
-        Macaw::get('wiki/deleteWiki', 'App\Wiki\Wiki@deleteWiki');
-        Macaw::get('wiki/getWikiDetail', 'App\Wiki\Wiki@getWikiDetail');
+        Macaw::get('wiki/deleteWiki/(:num)', 'App\Wiki\Wiki@deleteWiki');
+        Macaw::get('wiki/getWikiDetail/(:num)', 'App\Wiki\Wiki@getWikiDetail');
 
+        Macaw::error(function() {
+            echo '哎呀，迷路了呢';
+        });
         Macaw::dispatch();
     }
 

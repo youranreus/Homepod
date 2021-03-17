@@ -1,13 +1,14 @@
 <?php
 namespace App\Wiki;
-use App\Core\X;
 use Medoo\Medoo;
 use App\Conf\Conf;
+use App\Sec\Sec;
 error_reporting(0);
 
 class Wiki
 {
     private $database;
+    private $Sec;
 
     /**
      * wiki constructor.
@@ -23,6 +24,8 @@ class Wiki
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_general_ci',
         ]);
+
+        $this->Sec = new Sec();
     }
 
     /**
@@ -58,16 +61,17 @@ class Wiki
     }
 
     /**
-     * @return string[]
+     * @param $id
      * User: youranreus
      * Date: 2020/12/22 18:55
      */
-    public function getWikiDetail(){
-        if(!isset($_GET['id'])){
+    public function getWikiDetail($id)
+    {
+        if(!isset($id)){
             exit(json_encode(array("msg"=>"ID缺失")));
         }
         $Wiki = $this->database->select("wiki","*", [
-            "id" => $_GET["id"]
+            "id" => $id
         ]);
         exit(json_encode($Wiki));
     }
@@ -77,9 +81,10 @@ class Wiki
      * User: youranreus
      * Date: 2020/12/22 18:55
      */
-    public function postWiki(){
+    public function postWiki(): array
+    {
 
-        $this->accessCheck("post");
+        $this->Sec->accessCheck("post");
 
         if(!isset($_POST["author"]) or !isset($_POST["title"]) or !isset($_POST["cate"]) or !isset($_POST["likes"]) or !isset($_POST["contents"])){
             exit(json_encode(array("msg"=>"数据缺失")));
@@ -100,17 +105,18 @@ class Wiki
     /**
      * User: youranreus
      * Date: 2021/3/16 14:49
+     * @param $id
      */
-    public function deleteWiki(){
+    public function deleteWiki($id){
 
-        $this->accessCheck("get");
+        $this->Sec->accessCheck("get");
 
-        if(!isset($_GET["id"])){
+        if(!isset($id)){
             exit(json_encode(array("msg"=>"数据缺失")));
         }
 
         $action=$this->database->delete("wiki", [
-            "id" => $_GET["id"]
+            "id" => $id
         ]);
 
         exit(json_encode(array("msg"=>"ok","rows"=>$action->rowCount())));
@@ -122,33 +128,6 @@ class Wiki
      */
     public function test(){
         echo date("yy-m-d");
-    }
-
-    /**
-     * @param $method
-     * User: youranreus
-     * Date: 2021/3/16 14:48
-     */
-    private function accessCheck($method){
-
-        if($method == 'get'){
-            if(!isset($_GET["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
-            }
-            if($_GET["key"]!=Conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
-            }
-        }
-        if($method == 'post'){
-            if(!isset($_POST["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
-            }
-            if($_POST["key"]!=Conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
-            }
-        }
-
-
     }
 
 }

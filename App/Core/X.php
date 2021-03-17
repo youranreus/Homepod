@@ -81,7 +81,7 @@ class X
      * User: youranreus
      * Date: 2021/3/16 14:33
      */
-    public function WebsiteCheck(): array
+    private function WebsiteCheck(): array
     {
 
         $websiteStatus = array();

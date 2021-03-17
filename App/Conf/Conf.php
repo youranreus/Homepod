@@ -25,6 +25,7 @@ namespace App\Conf {
         static $enableReg = true;
         static $enableCache = true;
         static $cacheDir = "cache";
+        static $pageLimit = 3;
 
         //other setting
         //...
