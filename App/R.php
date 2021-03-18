@@ -31,6 +31,7 @@ class R
         Macaw::get('X/status', 'App\Core\X@status');
         Macaw::get('X/getSites', 'App\Core\X@getSites');
         Macaw::get('X/getBlogRSS', 'App\Core\X@getBlogRSS');
+        Macaw::get('DB/tableCheck','App\Core\DB@makeAllTables');
 
         Macaw::get('item/getItem/(:num)', 'App\ItemManager\ItemManager@getItem');
         Macaw::get('item/addItem', 'App\ItemManager\ItemManager@addItem');

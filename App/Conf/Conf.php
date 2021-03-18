@@ -22,6 +22,7 @@ namespace App\Conf {
         static $username = "root";
         static $password = "";
         static $dbname = "homepod";
+        static $tableList = ["wiki","item"];
 
         //function setting
         static $enableReg = true;
