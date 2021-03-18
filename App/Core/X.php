@@ -113,7 +113,19 @@ class X
      */
     public function getSites()
     {
-        exit(json_encode(Conf::$websites));
+        if(isset($_GET["type"]) and $_GET["type"] == "all")
+        {
+            exit(json_encode(Conf::$websites));
+        }
+        $websites = array();
+        for($i = 0;$i < count(Conf::$websites);$i++)
+        {
+            if(Conf::$websites[$i][2])
+            {
+                $websites[] = Conf::$websites[$i];
+            }
+        }
+        exit(json_encode($websites));
     }
 
     /**
@@ -184,7 +196,7 @@ class X
         }
 
         $result = $this->cache->readCache(md5($_GET["url"]));
-        exit(json_encode($result));
+        exit(json_encode(json_decode($result)));
     }
 
 
