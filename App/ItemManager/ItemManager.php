@@ -160,13 +160,42 @@ class ItemManager
                 "id" => $id
             ]);
 
-//            exit(json_encode($this->database->id()));
-            exit(json_encode("ok"));
+            exit(json_encode($this->database->id()));
+//            exit(json_encode("ok"));
         }
 
         exit(json_encode("参数缺失"));
 
     }
+
+    public function getItemByDate()
+    {
+        if(isset($_GET["type"]) and isset($_GET["date"]))
+        {
+            if($_GET["type"] == 'before')
+            {
+                exit(json_encode($this->database->select(
+                    "item",
+                    ["id","name","price","cate","tag"],
+                    [
+                        "buydate[><]"=>[$_GET["date"],date('Y-m-d')]
+                    ])));
+            }
+
+            if($_GET["type"] == 'after')
+            {
+                exit(json_encode($this->database->select(
+                    "item",
+                    ["id","name","price","cate","tag"],
+                    [
+                        "buydate[<>]"=>[$_GET["date"],date('Y-m-d')]
+                    ])));
+            }
+
+        }
+        exit(json_encode("参数缺失"));
+    }
+
 
     /**
      * @return bool
