@@ -1,19 +1,22 @@
 <?php
 namespace App\Core;
 use App\Conf\Conf;
-use App\Core\cache;
+use App\Core\DB;
+use App\Sec\Sec;
 use mysqli;
 error_reporting(0);
 
 
 class X
 {
-    public $UserAgent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.04506; .NET CLR 3.5.21022; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
-    public $cache;
+    private $UserAgent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.04506; .NET CLR 3.5.21022; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
+    private $cache;
+    private $Sec;
 
     public function __construct()
     {
         $this->cache = new cache();
+        $this->Sec = new Sec();
     }
 
     /**
@@ -199,5 +202,19 @@ class X
         exit(json_encode(json_decode($result)));
     }
 
+    /**
+     * User: youranreus
+     * Date: 2021/3/18 18:42
+     */
+    public function fixDBTable()
+    {
+        $this->Sec->accessCheck('get');
+        $DB = new DB();
+        if(count($DB->tableCheck()) == 0)
+        {
+            exit(json_encode("Table is ok"));
+        }
+        exit(json_encode($DB->makeAllTables()));
+    }
 
 }
