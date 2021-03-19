@@ -48,15 +48,18 @@ class Wiki
     /**
      * User: youranreus
      * Date: 2021/3/16 14:52
+     * @param $page
      */
-    public function getWikiList(){
+    public function getWikiList($page){
+        $page = ($page-1) * Conf::$WikiPageLimit;
         if(isset($_GET['cate'])){
             $Wikis = $this->database->select("wiki",["id","title","cate","date"], [
-                "cate" => $_GET["cate"]
+                "cate" => $_GET["cate"],
+                "LIMIT" => [$page , Conf::$WikiPageLimit]
             ]);
             exit(json_encode($Wikis));
         }
-        $Wikis = $this->database->select("wiki", "*");
+        $Wikis = $this->database->select("wiki", "*",["LIMIT" => [$page , Conf::$WikiPageLimit]]);
         exit(json_encode($Wikis));
     }
 
@@ -128,6 +131,21 @@ class Wiki
      */
     public function test(){
         echo date("yy-m-d");
+    }
+
+    /**
+     * @param $keyword
+     * User: youranreus
+     * Date: 2021/3/19 12:14
+     */
+    public function search($keyword)
+    {
+        $keywords = explode(" ",urldecode($keyword));
+        exit(json_encode($this->database->select(
+            "wiki",
+            "*",
+            ["title[~]" => $keywords]
+        )));
     }
 
 }

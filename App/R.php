@@ -42,9 +42,10 @@ class R
 
 
         Macaw::post('wiki/postWiki', 'App\Wiki\Wiki@postWiki');
-        Macaw::get('wiki/getWikiList', 'App\Wiki\Wiki@getWikiList');
+        Macaw::get('wiki/getWikiList/(:num)', 'App\Wiki\Wiki@getWikiList');
         Macaw::get('wiki/deleteWiki/(:num)', 'App\Wiki\Wiki@deleteWiki');
         Macaw::get('wiki/getWikiDetail/(:num)', 'App\Wiki\Wiki@getWikiDetail');
+        Macaw::get('wiki/search/(:any)', 'App\Wiki\Wiki@search');
 
         Macaw::error(function() {
             echo '哎呀，迷路了呢';

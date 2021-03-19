@@ -28,7 +28,12 @@ namespace App\Conf {
         static $enableReg = true;
         static $enableCache = true;
         static $cacheDir = "cache";
-        static $pageLimit = 3;
+
+        //ItemManager Setting
+        static $ItemPageLimit = 4;
+
+        //Wiki Setting
+        static $WikiPageLimit = 4;
 
         //other setting
         //...

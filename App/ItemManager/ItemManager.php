@@ -112,11 +112,11 @@ class ItemManager
      */
     public function getItemList($page)
     {
-        $page = ($page-1)*Conf::$pageLimit;
+        $page = ($page-1) * Conf::$ItemPageLimit;
         exit(json_encode($this->database->select(
             "item",
             ["id","name","price","cate","tag"],
-            ["LIMIT" => [$page , Conf::$pageLimit]]
+            ["LIMIT" => [$page , Conf::$ItemPageLimit]]
         )));
     }
 
