@@ -3,7 +3,7 @@ namespace App\Conf {
 
     class Conf
     {
-        static $Version = "1.1";
+        static $Version = "1.1.2";
 
         //custom setting
         static $ServiceName = "季悠然的后花园";
@@ -36,6 +36,8 @@ namespace App\Conf {
         static $WikiPageLimit = 4;
 
         //other setting
+        static $UserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 RuxitSynthetic/1.0 v9229003888 t38550 ath9b965f92 altpub cvcv=2';
+
         //...
 
     }

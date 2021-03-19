@@ -5,6 +5,8 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/catfan/medoo" />
       <path value="$PROJECT_DIR$/vendor/noahbuscher/macaw" />
+      <path value="$PROJECT_DIR$/vendor/voku/simple_html_dom" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

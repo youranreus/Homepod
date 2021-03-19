@@ -5,8 +5,7 @@ namespace App\ItemManager;
 use App\Conf\Conf;
 use App\Sec\Sec;
 use Medoo\Medoo;
-use mysqli;
-use PDOStatement;
+use voku\helper\HtmlDomParser;
 
 
 class ItemManager
@@ -31,6 +30,7 @@ class ItemManager
         ]);
         $this->Sec = new Sec();
         $this->Sec->accessCheck("get");
+        ini_set('user_agent',Conf::$UserAgent);
     }
 
     /**
@@ -160,14 +160,17 @@ class ItemManager
                 "id" => $id
             ]);
 
-            exit(json_encode($this->database->id()));
-//            exit(json_encode("ok"));
+            exit(json_encode($this->database->id()));;
         }
 
         exit(json_encode("参数缺失"));
 
     }
 
+    /**
+     * User: youranreus
+     * Date: 2021/3/19 22:03
+     */
     public function getItemByDate()
     {
         if(isset($_GET["type"]) and isset($_GET["date"]))
@@ -210,6 +213,46 @@ class ItemManager
         }
 
         return false;
+    }
+
+    /**
+     * User: youranreus
+     * Date: 2021/3/19 22:03
+     */
+    public function getJDItemByLink()
+    {
+        if(!isset($_GET['link']))
+        {
+            exit(json_encode("参数缺失"));
+        }
+
+        $stream_opts = [
+            "ssl" => [
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ];
+
+        $itemMeta = [
+            "price"=> 0,
+            "name"=> "",
+            "skuid"=>""
+        ];
+
+        $id = parse_url($_GET['link'])['path'];
+        $id = preg_replace("/\//i","",$id);
+        $id = preg_replace("/.html/i","",$id);
+        $itemMeta["skuid"] = $id;
+
+        $buff = file_get_contents($_GET["link"],false, stream_context_create($stream_opts)) or die("无法打开该网站");
+        $dom = HtmlDomParser::str_get_html($buff);
+        $itemMeta["name"] = $dom->findOne("title")->nodeValue;
+        $itemMeta["name"] = preg_replace("/【图片 价格 品牌 报价】-京东/i","",$itemMeta["name"]);
+        $itemMeta["name"] = preg_replace("/【行情 报价 价格 评测】-京东/i","",$itemMeta["name"]);
+        $buff = file_get_contents("http://p.3.cn/prices/mgets?skuIds=J_".$id,false, stream_context_create($stream_opts)) or die("无法获取价格");
+        $itemMeta["price"] = json_decode($buff)[0]->p;
+
+        exit(json_encode($itemMeta));
     }
 
 

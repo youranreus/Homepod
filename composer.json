@@ -19,7 +19,8 @@
     "ext-xml": "*",
     "ext-iconv": "*",
     "ext-pdo": "*",
-    "noahbuscher/macaw": "dev-master"
+    "noahbuscher/macaw": "dev-master",
+    "voku/simple_html_dom": "^4.7"
   },
   "description": ""
 }
