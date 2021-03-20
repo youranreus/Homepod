@@ -40,6 +40,7 @@ class R
         Macaw::get('item/search/(:any)','App\ItemManager\ItemManager@search');
         Macaw::get('item/getItemByDate','App\ItemManager\ItemManager@getItemByDate');
         Macaw::get('item/getJDItemByLink','App\ItemManager\ItemManager@getJDItemByLink');
+        Macaw::get('item/throw/(:num)','App\ItemManager\ItemManager@throwItem');
 
 
         Macaw::post('wiki/postWiki', 'App\Wiki\Wiki@postWiki');

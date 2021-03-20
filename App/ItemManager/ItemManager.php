@@ -160,7 +160,7 @@ class ItemManager
                 "id" => $id
             ]);
 
-            exit(json_encode($this->database->id()));;
+            exit(json_encode($this->database->id()));
         }
 
         exit(json_encode("参数缺失"));
@@ -253,6 +253,34 @@ class ItemManager
         $itemMeta["price"] = json_decode($buff)[0]->p;
 
         exit(json_encode($itemMeta));
+    }
+
+
+    /**
+     * @param $id
+     * User: youranreus
+     * Date: 2021/3/20 14:21
+     */
+    public function throwItem($id)
+    {
+        if(isset($_GET['date']))
+        {
+            $this->database->update("item", [
+                "throwdate" => $_GET["date"],
+            ],[
+                "id" => $id
+            ]);
+        }
+        else
+        {
+            $this->database->update("item", [
+                "throwdate" => date('Y-m-d'),
+            ],[
+                "id" => $id
+            ]);
+        }
+
+        exit(json_encode("finished"));
     }
 
 
