@@ -68,6 +68,7 @@ class DB
                       PRIMARY KEY (`id`)
                     ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
                 ")->fetchAll();
+
         $result[] = $this->database->query("
             CREATE TABLE IF NOT EXISTS `wiki` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -82,6 +83,14 @@ class DB
                 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ")->fetchAll();
 
+        $result[] = $this->database->query("
+            CREATE TABLE IF NOT EXISTS `note` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `key` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ")->fetchAll();
 
         return $result;
     }

@@ -42,7 +42,6 @@ class R
         Macaw::get('item/getJDItemByLink','App\ItemManager\ItemManager@getJDItemByLink');
         Macaw::get('item/throw/(:num)','App\ItemManager\ItemManager@throwItem');
 
-
         Macaw::post('wiki/postWiki', 'App\Wiki\Wiki@postWiki');
         Macaw::get('wiki/getWikiList/(:num)', 'App\Wiki\Wiki@getWikiList');
         Macaw::get('wiki/deleteWiki/(:num)', 'App\Wiki\Wiki@deleteWiki');
