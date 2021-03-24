@@ -101,13 +101,13 @@ class Note
     {
         $this->checkKey($sid);
 
-        if(!isset($_GET["content"]))
+        if(!isset($_POST["content"]))
         {
             exit(json_encode("参数缺失"));
         }
 
         $result = $this->database->update("note",[
-            "content"=>$_GET["content"]],[
+            "content"=>$_POST["content"]],[
             "sid"=>$sid
         ]);
 

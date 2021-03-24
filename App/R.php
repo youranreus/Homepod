@@ -50,7 +50,7 @@ class R
 
         Macaw::get('note/get/(:any)','App\Note\Note@getNote');
         Macaw::get('note/delete/(:any)','App\Note\Note@deleteNote');
-        Macaw::get('note/modify/(:any)','App\Note\Note@modifyNote');
+        Macaw::post('note/modify/(:any)','App\Note\Note@modifyNote');
 
         Macaw::error(function() {
             echo '哎呀，迷路了呢';
