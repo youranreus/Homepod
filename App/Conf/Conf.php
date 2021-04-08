@@ -3,7 +3,7 @@ namespace App\Conf {
 
     class Conf
     {
-        static $Version = "1.1.2";
+        static $Version = "1.1.3";
 
         //custom setting
         static $ServiceName = "季悠然的后花园";
