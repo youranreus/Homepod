@@ -99,7 +99,7 @@ class cache
         $result = array();
         $result = file_get_contents($this->getCacheDir($cacheName)."/data.json");
 
-        return $result;
+        return json_decode($result);
     }
 
     /**

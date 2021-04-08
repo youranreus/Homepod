@@ -198,7 +198,7 @@ class X
         }
 
         $result = $this->cache->readCache(md5($_GET["url"]));
-        exit(json_encode(json_decode($result)));
+        exit(json_encode($result));
     }
 
     /**
