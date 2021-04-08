@@ -3,15 +3,13 @@
 
 namespace App\ItemManager;
 use App\Conf\Conf;
+use App\Core\BaseController;
 use App\Sec\Sec;
-use Medoo\Medoo;
 use voku\helper\HtmlDomParser;
 
 
-class ItemManager
+class ItemManager extends BaseController
 {
-
-    private $database;
     private $Sec;
 
     /**
@@ -19,15 +17,7 @@ class ItemManager
      */
     public function __construct()
     {
-        $this->database = new medoo([
-            'database_type' => 'mysql',
-            'database_name' => Conf::$dbname,
-            'server' => Conf::$servername,
-            'username' => Conf::$username,
-            'password' => Conf::$password,
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_general_ci',
-        ]);
+        parent::__construct();
         $this->Sec = new Sec();
         $this->Sec->accessCheck("get");
         ini_set('user_agent',Conf::$UserAgent);

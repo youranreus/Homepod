@@ -1,13 +1,12 @@
 <?php
 namespace App\Wiki;
-use Medoo\Medoo;
+use App\Core\BaseController;
 use App\Conf\Conf;
 use App\Sec\Sec;
 error_reporting(0);
 
-class Wiki
+class Wiki extends BaseController
 {
-    private $database;
     private $Sec;
 
     /**
@@ -15,15 +14,7 @@ class Wiki
      */
     public function __construct()
     {
-        $this->database = new medoo([
-            'database_type' => 'mysql',
-            'database_name' => Conf::$dbname,
-            'server' => Conf::$servername,
-            'username' => Conf::$username,
-            'password' => Conf::$password,
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_general_ci',
-        ]);
+        parent::__construct();
 
         $this->Sec = new Sec();
     }

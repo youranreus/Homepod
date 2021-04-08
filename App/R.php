@@ -22,7 +22,6 @@ class R
      */
     public function __construct()
     {
-//        $this->YRouter();
         Macaw::get('/', function() {
             echo "这里是".Conf::$ServiceName;
         });

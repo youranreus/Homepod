@@ -2,31 +2,18 @@
 
 
 namespace App\Deutsch;
-use App\Conf\Conf;
-use App\Core\cache;
-use Medoo\Medoo;
+use App\Core\BaseController;
 use voku\helper\HtmlDomParser;
 
-class Deutsch
+class Deutsch extends BaseController
 {
-    private $database;
-    private $cache;
 
     /**
      * Deutsch constructor.
      */
     public function __construct()
     {
-        $this->database = new medoo([
-            'database_type' => 'mysql',
-            'database_name' => Conf::$dbname,
-            'server' => Conf::$servername,
-            'username' => Conf::$username,
-            'password' => Conf::$password,
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_general_ci',
-        ]);
-        $this->cache = new cache();
+        parent::__construct();
     }
 
     /**
