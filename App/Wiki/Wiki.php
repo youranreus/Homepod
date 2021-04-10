@@ -20,23 +20,6 @@ class Wiki extends BaseController
     }
 
     /**
-     * @param $action
-     * User: youranreus
-     * Date: 2020/12/23 10:26
-     */
-    public static function go($action)
-    {
-        $Wiki = new Wiki();
-        $result = $Wiki->$action();
-        if(!is_bool($result))
-        {
-            echo json_encode($result);
-        }
-        exit();
-    }
-
-
-    /**
      * User: youranreus
      * Date: 2021/3/16 14:52
      * @param $page

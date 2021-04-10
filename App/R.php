@@ -52,6 +52,7 @@ class R
         Macaw::post('note/modify/(:any)','App\Note\Note@modifyNote');
 
         Macaw::get('Deutsch/dailySentence','App\Deutsch\Deutsch@dailySentence');
+        Macaw::get('Deutsch/search/(:any)', 'App\Deutsch\Deutsch@search');
 
         Macaw::error(function() {
             echo '哎呀，迷路了呢';

@@ -23,21 +23,6 @@ class ItemManager extends BaseController
         ini_set('user_agent',Conf::$UserAgent);
     }
 
-    /**
-     * @param $action
-     * User: youranreus
-     * Date: 2021/3/4 15:43
-     */
-    public static function go($action)
-    {
-        $ItemManager = new ItemManager();
-        $result = $ItemManager->$action();
-        if(!is_bool($result))
-        {
-            echo json_encode($result);
-        }
-        exit();
-    }
 
     /**
      * User: youranreus

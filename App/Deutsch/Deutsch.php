@@ -17,11 +17,12 @@ class Deutsch extends BaseController
     }
 
     /**
-     * @return array
+     * @param $url
+     * @return false|string
      * User: youranreus
-     * Date: 2021/4/8 14:04
+     * Date: 2021/4/8 22:21
      */
-    private function getSentence(): array
+    private function getSiteContent($url)
     {
         $stream_opts = [
             "ssl" => [
@@ -30,8 +31,18 @@ class Deutsch extends BaseController
             ]
         ];
 
-        $buff= file_get_contents("http://www.godic.net/home/dailysentence/",false, stream_context_create($stream_opts)) or die("抓取失败");
+        $buff = file_get_contents($url,false, stream_context_create($stream_opts)) or die("抓取失败");
+        return $buff;
+    }
 
+    /**
+     * @return array
+     * User: youranreus
+     * Date: 2021/4/8 14:04
+     */
+    private function getSentence(): array
+    {
+        $buff = $this->getSiteContent("http://www.godic.net/home/dailysentence/");
         $dom = HtmlDomParser::str_get_html($buff);
         $sentence = $dom->findOne('.sect_de')->innerhtml;
         $trans = $dom->findOne('.sect-trans')->innerhtml;
@@ -46,6 +57,10 @@ class Deutsch extends BaseController
         return $result;
     }
 
+    /**
+     * User: youranreus
+     * Date: 2021/4/8 22:19
+     */
     public function dailySentence()
     {
         if($this->cache->haveCache("DSentence"))
@@ -59,6 +74,35 @@ class Deutsch extends BaseController
 
         $this->getSentence();
         $result = $this->cache->readCache("DSentence");
+        exit(json_encode($result));
+    }
+
+    /**
+     * @param $keyword
+     * User: youranreus
+     * Date: 2021/4/10 11:49
+     */
+    public function search($keyword)
+    {
+        $result = [
+            "exp"=>[],
+            "cara"=>[]
+        ];
+        $content = $this->getSiteContent("http://www.godic.net/dicts/de/".$keyword);
+        $dom = HtmlDomParser::str_get_html($content);
+        $exp = $dom->findMultiOrFalse('#ExpFC .exp');
+        $cara = $dom->findMultiOrFalse('#ExpFC .cara');
+
+        foreach ($exp as $value)
+        {
+            $result["exp"][] = $value->innerText();
+        }
+        foreach ($cara as $value)
+        {
+            if($value->innerText() != $keyword)
+                $result["cara"][] = $value->innerText();
+        }
+
         exit(json_encode($result));
     }
 
