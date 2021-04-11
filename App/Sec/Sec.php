@@ -16,18 +16,18 @@ class Sec
 
         if($method == 'get'){
             if(!isset($_GET["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
+                exit(json_encode(array("msg"=>Conf::$msgOnKeyMissing)));
             }
             if($_GET["key"]!=Conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
+                exit(json_encode(array("msg"=>Conf::$msgOnKeyError)));
             }
         }
         if($method == 'post'){
             if(!isset($_POST["key"])){
-                exit(json_encode(array("msg"=>"数据缺失")));
+                exit(json_encode(array("msg"=>Conf::$msgOnKeyMissing)));
             }
             if($_POST["key"]!=Conf::$key){
-                exit(json_encode(array("msg"=>"密钥错误错误")));
+                exit(json_encode(array("msg"=>Conf::$msgOnKeyError)));
             }
         }
 

@@ -103,7 +103,7 @@ class Note extends BaseController
 
         if(!isset($_POST["content"]))
         {
-            exit(json_encode("参数缺失"));
+            exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
         }
 
         $result = $this->database->update("note",["content"=>$_POST["content"]],["sid"=>$sid]);
@@ -120,11 +120,11 @@ class Note extends BaseController
     {
         if(!isset($_GET["key"]))
         {
-            exit(json_encode("密钥缺失"));
+            exit(json_encode(["msg"=>Conf::$msgOnKeyMissing]));
         }
         if ($key != $_GET["key"])
         {
-            exit(json_encode("密钥错误或对应笔记不存在"));
+            exit(json_encode(["msg"=>Conf::$msgOnKeyError]));
         }
     }
 

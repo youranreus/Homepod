@@ -34,9 +34,22 @@ namespace App\Conf {
 
         //Wiki Setting
         static $WikiPageLimit = 4;
+        static $WikiIDMissing = "ID缺失";
 
         //other setting
         static $UserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 RuxitSynthetic/1.0 v9229003888 t38550 ath9b965f92 altpub cvcv=2';
+
+        //msg setting
+        static $msgOn404 = "哎呀，迷路了呢";
+        static $msgOnWelcome = "这里是季悠然的后花园";
+        static $msgOnDBOk = "OK~";
+        static $msgOnDBDown = "Down";
+        static $msgOnStatusError = "有点问题额";
+        static $msgOnStatusFine = "状态良好~";
+        static $msgOnParamMissing = "参数缺失";
+        static $msgOnKeyMissing = "密钥缺失";
+        static $msgOnKeyError = "密钥错误或对应笔记不存在";
+        static $msgOnComplete = "操作成功";
 
         //...
 

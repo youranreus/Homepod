@@ -2,7 +2,7 @@
 
 namespace App;
 use App\Conf\Conf;
-use \NoahBuscher\Macaw\Macaw;
+use NoahBuscher\Macaw\Macaw;
 
 
 class R
@@ -23,7 +23,7 @@ class R
     public function __construct()
     {
         Macaw::get('/', function() {
-            echo "这里是".Conf::$ServiceName;
+            die(json_encode(["msg"=>Conf::$msgOnWelcome]));
         });
 
         Macaw::get('/', 'Controllers\demo@index');
@@ -55,7 +55,7 @@ class R
         Macaw::get('Deutsch/search/(:any)', 'App\Deutsch\Deutsch@search');
 
         Macaw::error(function() {
-            echo '哎呀，迷路了呢';
+            die(json_encode(["msg"=>Conf::$msgOn404]));
         });
         Macaw::dispatch();
     }
@@ -74,7 +74,7 @@ class R
         $this->url = explode("/",$temp);
         if($this->url[1] == '')
         {
-            echo "这里是".Conf::$ServiceName;
+            die(json_encode(["msg"=>Conf::$msgOnWelcome]));
         }
         else
         {

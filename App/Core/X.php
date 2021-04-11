@@ -36,28 +36,19 @@ class X
 
     /**
      * User: youranreus
-     * Date: 2020/12/21 23:40
-     */
-    private function hello()
-    {
-        exit(json_encode("这里是".Conf::$ServiceName));
-    }
-
-    /**
-     * User: youranreus
      * Date: 2021/3/15 23:18
      */
     public function status()
     {
         $status = array(
-            "msg"=>"有点问题额",
-            "DB"=>"DOWN",
+            "msg"=>Conf::$msgOnStatusError,
+            "DB"=>Conf::$msgOnDBDown,
             "version"=>Conf::$Version,
             "websiteStatus"=>$this->WebsiteCheck()
         );
         if($this->DBCheck()){
-            $status["DB"]="OK";
-            $status["msg"]="状态良好~";
+            $status["DB"] = Conf::$msgOnDBOk;
+            $status["msg"] = Conf::$msgOnStatusFine;
         }
 
         exit(json_encode($status));

@@ -45,7 +45,7 @@ class Wiki extends BaseController
     public function getWikiDetail($id)
     {
         if(!isset($id)){
-            exit(json_encode(array("msg"=>"ID缺失")));
+            exit(json_encode(array("msg"=>Conf::$WikiIDMissing)));
         }
         $Wiki = $this->database->select("wiki","*", [
             "id" => $id
@@ -64,7 +64,7 @@ class Wiki extends BaseController
         $this->Sec->accessCheck("post");
 
         if(!isset($_POST["author"]) or !isset($_POST["title"]) or !isset($_POST["cate"]) or !isset($_POST["likes"]) or !isset($_POST["contents"])){
-            exit(json_encode(array("msg"=>"数据缺失")));
+            exit(json_encode(array("msg"=>Conf::$msgOnParamMissing)));
         }
 
         $this->database->insert("wiki", [
@@ -89,7 +89,7 @@ class Wiki extends BaseController
         $this->Sec->accessCheck("get");
 
         if(!isset($id)){
-            exit(json_encode(array("msg"=>"数据缺失")));
+            exit(json_encode(array("msg"=>Conf::$msgOnParamMissing)));
         }
 
         $action=$this->database->delete("wiki", [
@@ -97,14 +97,6 @@ class Wiki extends BaseController
         ]);
 
         exit(json_encode(array("msg"=>"ok","rows"=>$action->rowCount())));
-    }
-
-    /**
-     * User: youranreus
-     * Date: 2020/12/21 23:42
-     */
-    public function test(){
-        echo date("yy-m-d");
     }
 
     /**

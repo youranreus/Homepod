@@ -59,7 +59,7 @@ class ItemManager extends BaseController
             exit(json_encode($this->database->id()));
         }
         
-        exit(json_encode("参数缺失"));
+        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
     }
 
     /**
@@ -77,7 +77,7 @@ class ItemManager extends BaseController
             ])));
         }
 
-        exit(json_encode("参数缺失"));
+        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
     }
 
     /**
@@ -138,7 +138,7 @@ class ItemManager extends BaseController
             exit(json_encode($this->database->id()));
         }
 
-        exit(json_encode("参数缺失"));
+        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
 
     }
 
@@ -171,7 +171,7 @@ class ItemManager extends BaseController
             }
 
         }
-        exit(json_encode("参数缺失"));
+        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
     }
 
 
@@ -198,7 +198,7 @@ class ItemManager extends BaseController
     {
         if(!isset($_GET['link']))
         {
-            exit(json_encode("参数缺失"));
+            exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
         }
 
         $stream_opts = [
@@ -255,7 +255,7 @@ class ItemManager extends BaseController
             ]);
         }
 
-        exit(json_encode("finished"));
+        exit(json_encode(["msg"=>Conf::$msgOnComplete]));
     }
 
 
