@@ -39,6 +39,7 @@ class Deutsch extends BaseController
      * @return array
      * User: youranreus
      * Date: 2021/4/8 14:04
+     * description: 来源：德语助手
      */
     private function getSentence(): array
     {
@@ -81,26 +82,18 @@ class Deutsch extends BaseController
      * @param $keyword
      * User: youranreus
      * Date: 2021/4/10 11:49
+     * description: 来源：欧华词典
      */
     public function search($keyword)
     {
-        $result = [
-            "exp"=>[],
-            "cara"=>[]
-        ];
-        $content = $this->getSiteContent("http://www.godic.net/dicts/de/".$keyword);
+        $result = [];
+        $content = $this->getSiteContent("http://deyu.ohdict.com/translate.php?seekname=".$keyword);
         $dom = HtmlDomParser::str_get_html($content);
-        $exp = $dom->findMultiOrFalse('#ExpFC .exp');
-        $cara = $dom->findMultiOrFalse('#ExpFC .cara');
+        $exp = $dom->findMultiOrFalse('#dict_5 .explain p');
 
         foreach ($exp as $value)
         {
-            $result["exp"][] = $value->innerText();
-        }
-        foreach ($cara as $value)
-        {
-            if($value->innerText() != $keyword)
-                $result["cara"][] = $value->innerText();
+            $result[] = $value->text;
         }
 
         exit(json_encode($result));
