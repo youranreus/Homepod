@@ -47,8 +47,9 @@ class Deutsch extends BaseController
         $dom = HtmlDomParser::str_get_html($buff);
         $sentence = $dom->findOne('.sect_de')->innerhtml;
         $trans = $dom->findOne('.sect-trans')->innerhtml;
+        $banner = $dom->findOne('#showerimg')->getAttribute("src");
 
-        $result = ["sentence"=>$sentence,"translation"=>$trans,"date"=>date('Y-m-d')];
+        $result = ["sentence"=>$sentence,"translation"=>$trans,"date"=>date('Y-m-d'),"banner"=>$banner];
         //写入缓存
         $this->cache->newCache("DSentence");
         $this->cache->writeCache("DSentence", $result);
