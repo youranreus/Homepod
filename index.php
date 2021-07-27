@@ -5,6 +5,35 @@
 header('Content-Type:application/json; charset=utf-8');
 header('Access-Control-Allow-Origin:*');
 include 'vendor/autoload.php';
-use App\R;
+use App\Core\HTTP;
+use App\Core\X;
+use App\Conf\Conf;
 
-$R = new R();
+//init DB
+if (is_file('./.env')) {
+    $env = parse_ini_file('./.env', true);    //解析env文件,name = PHP_KEY
+    foreach ($env as $key => $val) {
+        $name = strtoupper($key);
+        if (is_array($val)) {
+            foreach ($val as $k => $v) {    //如果是二维数组 item = PHP_KEY_KEY
+                $item = $name . '_' . strtoupper($k);
+                putenv("$item=$v");
+            }
+        } else {
+            putenv("$name=$val");
+        }
+    }
+}
+
+Conf::setDB([getenv('DB_servername'),getenv('DB_username'),getenv('DB_password'),getenv('DB_dbname')]);
+$X = new X();
+if(!$X->DBCheck())
+{
+    die(json_encode(['msg'=>'数据库信息初始化失败']));
+}
+
+//start App
+$App = new HTTP();
+
+//respond
+$App->throw();
