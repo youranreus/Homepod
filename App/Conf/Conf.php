@@ -1,6 +1,5 @@
 <?php
 namespace App\Conf;
-use App\Core\X;
 
 class Conf
 {
