@@ -18,17 +18,18 @@ class Note extends BaseController
 
     /**
      * @param $sid
+     * @return array|false
      * User: youranreus
-     * Date: 2021/3/23 16:29
+     * Date: 2021/7/25 19:42
      */
     public function getNote($sid)
     {
 
         if($this->database->has("note", ["sid"=>$sid]))
         {
-            exit(json_encode($this->database->select("note", ["content"], [
+            return $this->database->select("note", ["content"], [
                 "sid" => $sid
-            ])));
+            ]);
         }
         else
         {
@@ -68,10 +69,11 @@ class Note extends BaseController
 
     /**
      * @param $sid
+     * @return int
      * User: youranreus
-     * Date: 2021/3/23 16:47
+     * Date: 2021/7/25 19:43
      */
-    public function deleteNote($sid)
+    public function deleteNote($sid): int
     {
         $this->checkKey($sid);
 
@@ -79,13 +81,14 @@ class Note extends BaseController
             "sid"=>$sid
         ]);
 
-        exit(json_encode($data->rowCount()));
+        return $data->rowCount();
     }
 
     /**
      * @param $sid
+     * @return array|int
      * User: youranreus
-     * Date: 2021/3/23 17:40
+     * Date: 2021/7/25 19:43
      */
     public function modifyNote($sid)
     {
@@ -103,12 +106,12 @@ class Note extends BaseController
 
         if(!isset($_POST["content"]))
         {
-            exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
+            return ["msg"=>Conf::$msgOnParamMissing];
         }
 
         $result = $this->database->update("note",["content"=>$_POST["content"]],["sid"=>$sid]);
 
-        exit(json_encode($result->rowCount()));
+        return $result->rowCount();
     }
 
     /**
@@ -133,8 +136,9 @@ class Note extends BaseController
      * @return bool
      * User: youranreus
      * Date: 2021/3/24 19:22
+     * @noinspection PhpMissingReturnTypeInspection
      */
-    private function haveKey($sid): bool
+    private function haveKey($sid)
     {
         $key = $this->database->select("note","key",['sid'=>$sid]);
         if($key[0] != "")

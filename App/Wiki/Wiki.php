@@ -23,18 +23,17 @@ class Wiki extends BaseController
      * User: youranreus
      * Date: 2021/3/16 14:52
      * @param $page
+     * @return array|false
      */
     public function getWikiList($page){
         $page = ($page-1) * Conf::$WikiPageLimit;
         if(isset($_GET['cate'])){
-            $Wikis = $this->database->select("wiki",["id","title","cate","date"], [
+            return $this->database->select("wiki",["id","title","cate","date"], [
                 "cate" => $_GET["cate"],
                 "LIMIT" => [$page , Conf::$WikiPageLimit]
             ]);
-            exit(json_encode($Wikis));
         }
-        $Wikis = $this->database->select("wiki", "*",["LIMIT" => [$page , Conf::$WikiPageLimit]]);
-        exit(json_encode($Wikis));
+        return $this->database->select("wiki", "*",["LIMIT" => [$page , Conf::$WikiPageLimit]]);
     }
 
     /**
@@ -45,12 +44,11 @@ class Wiki extends BaseController
     public function getWikiDetail($id)
     {
         if(!isset($id)){
-            exit(json_encode(array("msg"=>Conf::$WikiIDMissing)));
+            return array("msg"=>Conf::$WikiIDMissing);
         }
-        $Wiki = $this->database->select("wiki","*", [
+        return $this->database->select("wiki","*", [
             "id" => $id
         ]);
-        exit(json_encode($Wiki));
     }
 
     /**
@@ -64,7 +62,7 @@ class Wiki extends BaseController
         $this->Sec->accessCheck("post");
 
         if(!isset($_POST["author"]) or !isset($_POST["title"]) or !isset($_POST["cate"]) or !isset($_POST["likes"]) or !isset($_POST["contents"])){
-            exit(json_encode(array("msg"=>Conf::$msgOnParamMissing)));
+            return array("msg"=>Conf::$msgOnParamMissing);
         }
 
         $this->database->insert("wiki", [
@@ -76,7 +74,7 @@ class Wiki extends BaseController
             "contents"=>$_POST["contents"],
         ]);
 
-        exit(json_encode(array("msg"=>"ok","id"=>$this->database->id())));
+        return array("msg"=>"ok","id"=>$this->database->id());
     }
 
     /**
@@ -84,19 +82,20 @@ class Wiki extends BaseController
      * Date: 2021/3/16 14:49
      * @param $id
      */
-    public function deleteWiki($id){
+    public function deleteWiki($id): array
+    {
 
         $this->Sec->accessCheck("get");
 
         if(!isset($id)){
-            exit(json_encode(array("msg"=>Conf::$msgOnParamMissing)));
+            return array("msg"=>Conf::$msgOnParamMissing);
         }
 
         $action=$this->database->delete("wiki", [
             "id" => $id
         ]);
 
-        exit(json_encode(array("msg"=>"ok","rows"=>$action->rowCount())));
+        return array("msg"=>"ok","rows"=>$action->rowCount());
     }
 
     /**
@@ -107,11 +106,11 @@ class Wiki extends BaseController
     public function search($keyword)
     {
         $keywords = explode(" ",urldecode($keyword));
-        exit(json_encode($this->database->select(
+        return $this->database->select(
             "wiki",
             "*",
             ["title[~]" => $keywords]
-        )));
+        );
     }
 
 }

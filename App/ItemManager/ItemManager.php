@@ -56,65 +56,69 @@ class ItemManager extends BaseController
                 "price" => $_GET["price"]
             ]);
 
-            exit(json_encode($this->database->id()));
+            return $this->database->id();
         }
         
-        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
+        return ["msg"=>Conf::$msgOnParamMissing];
     }
 
     /**
      * User: youranreus
      * Date: 2021/3/16 14:46
      * @param $id
+     * @return array|false
      */
     public function getItem($id)
     {
 
         if(isset($id))
         {
-            exit(json_encode($this->database->select("item", "*", [
+            return $this->database->select("item", "*", [
                 "id" => $id
-            ])));
+            ]);
         }
 
-        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
+        return ["msg"=>Conf::$msgOnParamMissing];
     }
 
     /**
      * User: youranreus
      * Date: 2021/3/17 19:33
      * @param $page
+     * @return array|false
      */
     public function getItemList($page)
     {
         $page = ($page-1) * Conf::$ItemPageLimit;
-        exit(json_encode($this->database->select(
+        return $this->database->select(
             "item",
             ["id","name","price","cate","tag"],
             ["LIMIT" => [$page , Conf::$ItemPageLimit]]
-        )));
+        );
     }
 
     /**
      * @param $keyword
+     * @return array|false
      * User: youranreus
-     * Date: 2021/3/17 22:53
+     * Date: 2021/7/25 19:24
      */
     public function search($keyword)
     {
         $keywords = explode(" ",urldecode($keyword));
-        exit(json_encode($this->database->select(
+        return $this->database->select(
             "item",
             ["id","name","price","cate","tag"],
             ["name[~]" => $keywords]
-        )));
+        );
     }
 
 
     /**
      * @param $id
+     * @return array|int|mixed|string|null
      * User: youranreus
-     * Date: 2021/3/17 19:30
+     * Date: 2021/7/25 19:24
      */
     public function updateItem($id)
     {
@@ -135,16 +139,17 @@ class ItemManager extends BaseController
                 "id" => $id
             ]);
 
-            exit(json_encode($this->database->id()));
+            return $this->database->id();
         }
 
-        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
+        return ["msg"=>Conf::$msgOnParamMissing];
 
     }
 
     /**
+     * @return array|false
      * User: youranreus
-     * Date: 2021/3/19 22:03
+     * Date: 2021/7/25 19:25
      */
     public function getItemByDate()
     {
@@ -152,26 +157,26 @@ class ItemManager extends BaseController
         {
             if($_GET["type"] == 'before')
             {
-                exit(json_encode($this->database->select(
+                return $this->database->select(
                     "item",
                     ["id","name","price","cate","tag"],
                     [
                         "buydate[><]"=>[$_GET["date"],date('Y-m-d')]
-                    ])));
+                    ]);
             }
 
             if($_GET["type"] == 'after')
             {
-                exit(json_encode($this->database->select(
+                return $this->database->select(
                     "item",
                     ["id","name","price","cate","tag"],
                     [
                         "buydate[<>]"=>[$_GET["date"],date('Y-m-d')]
-                    ])));
+                    ]);
             }
 
         }
-        exit(json_encode(["msg"=>Conf::$msgOnParamMissing]));
+        return ["msg"=>Conf::$msgOnParamMissing];
     }
 
 
@@ -191,10 +196,11 @@ class ItemManager extends BaseController
     }
 
     /**
+     * @return array
      * User: youranreus
-     * Date: 2021/3/19 22:03
+     * Date: 2021/7/25 19:26
      */
-    public function getJDItemByLink()
+    public function getJDItemByLink(): array
     {
         if(!isset($_GET['link']))
         {
@@ -227,16 +233,17 @@ class ItemManager extends BaseController
         $buff = file_get_contents("http://p.3.cn/prices/mgets?skuIds=J_".$id,false, stream_context_create($stream_opts)) or die("无法获取价格");
         $itemMeta["price"] = json_decode($buff)[0]->p;
 
-        exit(json_encode($itemMeta));
+        return $itemMeta;
     }
 
 
     /**
      * @param $id
+     * @return array
      * User: youranreus
-     * Date: 2021/3/20 14:21
+     * Date: 2021/7/25 19:26
      */
-    public function throwItem($id)
+    public function throwItem($id): array
     {
         if(isset($_GET['date']))
         {
@@ -255,7 +262,7 @@ class ItemManager extends BaseController
             ]);
         }
 
-        exit(json_encode(["msg"=>Conf::$msgOnComplete]));
+        return ["msg"=>Conf::$msgOnComplete];
     }
 
 

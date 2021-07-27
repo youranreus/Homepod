@@ -75,8 +75,7 @@ class Deutsch extends BaseController
         }
 
         $this->getSentence();
-        $result = $this->cache->readCache("DSentence");
-        exit(json_encode($result));
+        return $this->cache->readCache("DSentence");
     }
 
     /**
@@ -85,7 +84,7 @@ class Deutsch extends BaseController
      * Date: 2021/4/10 11:49
      * description: 来源：欧华词典
      */
-    public function search($keyword)
+    public function search($keyword): array
     {
         $result = [];
         $content = $this->getSiteContent("http://deyu.ohdict.com/translate.php?seekname=".$keyword);
@@ -97,7 +96,7 @@ class Deutsch extends BaseController
             $result[] = $value->text;
         }
 
-        exit(json_encode($result));
+        return $result;
     }
 
 }

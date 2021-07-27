@@ -16,22 +16,6 @@ class cache
     }
 
     /**
-     * @param $action
-     * User: youranreus
-     * Date: 2021/2/23 16:58
-     */
-    public static function go($action)
-    {
-        $cache = new cache();
-        $result = $cache->$action("test");
-//        if(!is_bool($result))
-//        {
-            echo json_encode($result);
-//        }
-        exit();
-    }
-
-    /**
      * @param $cacheName
      * User: youranreus
      * Date: 2021/2/23 23:39
@@ -116,8 +100,4 @@ class cache
         return $dir;
     }
 
-    public function hello()
-    {
-        echo "hello";
-    }
 }

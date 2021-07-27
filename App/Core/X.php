@@ -1,7 +1,6 @@
 <?php
 namespace App\Core;
 use App\Conf\Conf;
-use App\Core\DB;
 use App\Sec\Sec;
 use mysqli;
 error_reporting(0);
@@ -19,26 +18,11 @@ class X
     }
 
     /**
-     * @param $action
+     * @return array
      * User: youranreus
-     * Date: 2020/12/22 15:53
+     * Date: 2021/7/25 19:49
      */
-    public static function go($action)
-    {
-        $X = new X();
-        $result = $X->$action();
-        if(!is_bool($result))
-        {
-            echo json_encode($result);
-        }
-        exit();
-    }
-
-    /**
-     * User: youranreus
-     * Date: 2021/3/15 23:18
-     */
-    public function status()
+    public function status(): array
     {
         $status = array(
             "msg"=>Conf::$msgOnStatusError,
@@ -51,7 +35,7 @@ class X
             $status["msg"] = Conf::$msgOnStatusFine;
         }
 
-        exit(json_encode($status));
+        return $status;
     }
 
     /**
@@ -59,7 +43,7 @@ class X
      * User: youranreus
      * Date: 2020/12/21 23:41
      */
-    private function DBCheck(): bool
+    public function DBCheck(): bool
     {
         $conn = new mysqli(Conf::$servername, Conf::$username, Conf::$password);
         // 检测连接
@@ -108,7 +92,7 @@ class X
     {
         if(isset($_GET["type"]) and $_GET["type"] == "all")
         {
-            exit(json_encode(Conf::$websites));
+            return Conf::$websites;
         }
         $websites = array();
         for($i = 0;$i < count(Conf::$websites);$i++)
@@ -118,7 +102,7 @@ class X
                 $websites[] = Conf::$websites[$i];
             }
         }
-        exit(json_encode($websites));
+        return $websites;
     }
 
     /**
@@ -130,7 +114,7 @@ class X
         $result = array();
         if(!isset($_GET["url"]))
         {
-            exit(json_decode("请输入url"));
+            return "请输入url";
         }
         if((isset($_GET["type"]) && $_GET["type"] == "force") || !$this->cache->haveCache(md5($_GET["url"])))
         {
@@ -185,11 +169,10 @@ class X
             $this->cache->newCache(md5($_GET["url"]));
             $this->cache->writeCache(md5($_GET["url"]), $result);
             //输出结果
-            exit(json_encode($result));
+            return $result;
         }
 
-        $result = $this->cache->readCache(md5($_GET["url"]));
-        exit(json_encode($result));
+        return $this->cache->readCache(md5($_GET["url"]));
     }
 
     /**
@@ -202,9 +185,9 @@ class X
         $DB = new DB();
         if(count($DB->tableCheck()) == 0)
         {
-            exit(json_encode("Table is ok"));
+            return "Table is ok";
         }
-        exit(json_encode($DB->makeAllTables()));
+        return $DB->makeAllTables();
     }
 
 }
