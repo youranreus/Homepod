@@ -8,6 +8,7 @@ func:
   - 更新物品
   - 根据时间列出物品
   - 获取物品信息
+enable: true
 route:
   - get:
       item/getItem/(:num): App\ItemManager\ItemManager@getItem

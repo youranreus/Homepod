@@ -1,5 +1,6 @@
 name: Wiki
 des: Wiki
+enable: true
 func:
   - 新增wiki
   - 修改wiki

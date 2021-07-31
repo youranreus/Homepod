@@ -1,5 +1,6 @@
 name: Note
 des: 笔记
+enable: true
 func:
   - 新增笔记
   - 修改笔记

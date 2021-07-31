@@ -1,5 +1,6 @@
 name: Deutsch
 des: 德语学习助手
+enable: true
 func:
   - 单词搜索
   - 每日一句

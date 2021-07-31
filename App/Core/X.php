@@ -197,15 +197,37 @@ class X
      * User: youranreus
      * Date: 2021/7/31 15:00
      */
-    public function getModuleList(): array
+    public function getModuleList($enable = 1): array
     {
         $data = scandir(dirname(__FILE__).'\..');
         $result = [];
-        for($i = 2;$i<count($data);$i++)
-            if($data[$i] != 'Conf' && $data[$i] != 'Core' && $data[$i] != 'Sec' && $data[$i] != 'R.php')
-                $result[] = $data[$i];
+        if($enable == 1)
+            for($i = 2;$i<count($data);$i++)
+            {
+                if($data[$i] != 'Conf' && $data[$i] != 'Core' && $data[$i] != 'Sec' && $data[$i] != 'R.php' && $this->isModuleEnabled($data[$i]))
+                    $result[] = $data[$i];
+            }
+        else
+            for($i = 2;$i<count($data);$i++)
+            {
+                if($data[$i] != 'Conf' && $data[$i] != 'Core' && $data[$i] != 'Sec' && $data[$i] != 'R.php')
+                    $result[] = $data[$i];
+            }
+
         return $result;
     }
+
+    /**
+     * @param $Module
+     * @return bool
+     * User: youranreus
+     * Date: 2021/7/31 23:20
+     */
+    public function isModuleEnabled($Module): bool
+    {
+        return (bool)$this->getModuleInfo($Module)['enable'];
+    }
+
 
     /**
      * @param string $Module
