@@ -13,7 +13,7 @@ use App\Conf\Conf;
 if (is_file('./.env')) {
     $env = parse_ini_file('./.env', true);    //解析env文件,name = PHP_KEY
     foreach ($env as $key => $val) {
-        $name = strtoupper($key);
+        $name = $key;
         if (is_array($val)) {
             foreach ($val as $k => $v) {    //如果是二维数组 item = PHP_KEY_KEY
                 $item = $name . '_' . strtoupper($k);
