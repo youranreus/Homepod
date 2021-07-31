@@ -10,6 +10,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/noahbuscher/macaw" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/voku/simple_html_dom" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

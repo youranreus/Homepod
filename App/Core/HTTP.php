@@ -7,17 +7,16 @@ use App\R;
 class HTTP
 {
     private $R;
-    private $result;
 
     public function __construct()
     {
-        $R = new R();
-        $this->result = $R->Dispatch();
+        $this->R = new R();
     }
 
     public function throw()
     {
-        die(json_encode($this->result));
+        $result = $this->R->Dispatch();
+        die(json_encode($result));
     }
 
 }

@@ -3,6 +3,8 @@ namespace App\Core;
 use App\Conf\Conf;
 use App\Sec\Sec;
 use mysqli;
+use Symfony\Component\Yaml\Yaml;
+
 error_reporting(0);
 
 
@@ -66,7 +68,7 @@ class X
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HEADER, 1);
         curl_setopt($curl,CURLOPT_NOBODY,true);
-        curl_setopt($curl, CURLOPT_USERAGENT, $this->UserAgent);
+        curl_setopt($curl, CURLOPT_USERAGENT, Conf::$UserAgent);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -88,7 +90,7 @@ class X
      * User: youranreus
      * Date: 2021/3/15 23:19
      */
-    public function getSites()
+    public function getSites(): array
     {
         if(isset($_GET["type"]) and $_GET["type"] == "all")
         {
@@ -188,6 +190,51 @@ class X
             return "Table is ok";
         }
         return $DB->makeAllTables();
+    }
+
+    /**
+     * @return array
+     * User: youranreus
+     * Date: 2021/7/31 15:00
+     */
+    public function getModuleList(): array
+    {
+        $data = scandir(dirname(__FILE__).'\..');
+        $result = [];
+        for($i = 2;$i<count($data);$i++)
+            if($data[$i] != 'Conf' && $data[$i] != 'Core' && $data[$i] != 'Sec' && $data[$i] != 'R.php')
+                $result[] = $data[$i];
+        return $result;
+    }
+
+    /**
+     * @param string $Module
+     * @return mixed
+     * User: youranreus
+     * Date: 2021/7/31 15:28
+     */
+    private function getModuleInfo(string $Module = 'ItemManager')
+    {
+        $dir = dirname(__FILE__).'\..\/'.$Module.'\/module.yml';
+        return (new Yaml())->parseFile($dir);
+    }
+
+    /**
+     * User: youranreus
+     * Date: 2021/7/31 20:32
+     */
+    public function activeRouterRule(): void
+    {
+        $modules = $this->getModuleList();
+        foreach($modules as $module)
+        {
+            $data = $this->getModuleInfo($module);
+            if(isset($data['route']))
+                foreach($data['route'] as $i)
+                    foreach($i as $method => $content)
+                        foreach ($content as $key => $value)
+                            Router::{$method}($key,$value);
+        }
     }
 
 }

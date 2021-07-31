@@ -1,0 +1,13 @@
+name: Wiki
+des: Wiki
+func:
+  - 新增wiki
+  - 修改wiki
+route:
+  - get:
+      wiki/getWikiList/(:num): App\Wiki\Wiki@getWikiList
+      wiki/deleteWiki/(:num): App\Wiki\Wiki@deleteWiki
+      wiki/getWikiDetail/(:num): App\Wiki\Wiki@getWikiDetail
+      wiki/search/(:any): App\Wiki\Wiki@search
+  - post:
+      wiki/postWiki: App\Wiki\Wiki@postWiki

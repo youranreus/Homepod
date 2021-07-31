@@ -1,0 +1,11 @@
+name: Note
+des: 笔记
+func:
+  - 新增笔记
+  - 修改笔记
+route:
+  - get:
+      note/get/(:any): App\Note\Note@getNote
+      note/delete/(:any): App\Note\Note@deleteNote
+  - post:
+      note/modify/(:any): App\Note\Note@modifyNote

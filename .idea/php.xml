@@ -7,6 +7,9 @@
       <path value="$PROJECT_DIR$/vendor/noahbuscher/macaw" />
       <path value="$PROJECT_DIR$/vendor/voku/simple_html_dom" />
       <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

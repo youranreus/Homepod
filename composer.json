@@ -20,7 +20,8 @@
     "ext-iconv": "*",
     "ext-pdo": "*",
     "noahbuscher/macaw": "dev-master",
-    "voku/simple_html_dom": "^4.7"
+    "voku/simple_html_dom": "^4.7",
+        "symfony/yaml": "^5.3"
   },
   "description": ""
 }

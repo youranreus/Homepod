@@ -1,0 +1,9 @@
+name: Deutsch
+des: 德语学习助手
+func:
+  - 单词搜索
+  - 每日一句
+route:
+  - get:
+      Deutsch/dailySentence: App\Deutsch\Deutsch@dailySentence
+      Deutsch/search/(:any): App\Deutsch\Deutsch@search

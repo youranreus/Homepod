@@ -32,8 +32,21 @@ if(!$X->DBCheck())
     die(json_encode(['msg'=>'数据库信息初始化失败']));
 }
 
+//set debug mode
+if(getenv('DEBUG'))
+{
+    error_reporting(0);
+}
+else
+{
+    error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+}
+
 //start App
 $App = new HTTP();
+
+//active Router Rule
+$X->activeRouterRule();
 
 //respond
 $App->throw();
