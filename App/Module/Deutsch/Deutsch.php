@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Deutsch;
+namespace App\Module\Deutsch;
 use App\Core\BaseController;
 use voku\helper\HtmlDomParser;
 

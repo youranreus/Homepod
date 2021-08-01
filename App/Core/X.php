@@ -199,7 +199,7 @@ class X
      */
     public function getModuleList($enable = 1): array
     {
-        $data = scandir(dirname(__FILE__).'\..');
+        $data = scandir(dirname(__FILE__).'\..\/Module\/');
         $result = [];
         if($enable == 1)
             for($i = 2;$i<count($data);$i++)
@@ -237,7 +237,7 @@ class X
      */
     private function getModuleInfo(string $Module = 'ItemManager')
     {
-        $dir = dirname(__FILE__).'\..\/'.$Module.'\/module.yml';
+        $dir = dirname(__FILE__).'\..\/Module\/'.$Module.'\/module.yml';
         return (new Yaml())->parseFile($dir);
     }
 

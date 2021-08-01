@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Note;
+namespace App\Module\Note;
 use App\Conf\Conf;
 use App\Core\BaseController;
 

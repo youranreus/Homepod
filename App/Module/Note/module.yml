@@ -1,0 +1,12 @@
+name: Note
+des: 笔记
+enable: true
+func:
+  - 新增笔记
+  - 修改笔记
+route:
+  - get:
+      note/get/(:any): App\Module\Note\Note@getNote
+      note/delete/(:any): App\Module\Note\Note@deleteNote
+  - post:
+      note/modify/(:any): App\Module\Note\Note@modifyNote

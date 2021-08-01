@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\ItemManager;
+namespace App\Module\ItemManager;
 use App\Conf\Conf;
 use App\Core\BaseController;
 use App\Sec\Sec;

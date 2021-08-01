@@ -1,5 +1,5 @@
 <?php
-namespace App\Wiki;
+namespace App\Module\Wiki;
 use App\Core\BaseController;
 use App\Conf\Conf;
 use App\Sec\Sec;
