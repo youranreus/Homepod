@@ -189,7 +189,7 @@ class X
         {
             return "Table is ok";
         }
-        return $DB->makeAllTables();
+        return $DB->tableCheck();
     }
 
     /**

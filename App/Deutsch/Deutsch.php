@@ -17,6 +17,24 @@ class Deutsch extends BaseController
     }
 
     /**
+     * @return array|false
+     * User: youranreus
+     * Date: 2021/8/1 11:15
+     */
+    public function initDB()
+    {
+        return $this->database->query("
+            CREATE TABLE IF NOT EXISTS `dailysentence` (
+                  `id` int(11) NOT NULL,
+                  `date` date NOT NULL,
+                  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ")->fetchAll();
+    }
+
+
+    /**
      * @param $url
      * @return false|string
      * User: youranreus

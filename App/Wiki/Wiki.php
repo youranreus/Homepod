@@ -20,6 +20,28 @@ class Wiki extends BaseController
     }
 
     /**
+     * @return array|false
+     * User: youranreus
+     * Date: 2021/8/1 11:17
+     */
+    public function initDB()
+    {
+        return $this->database->query("
+            CREATE TABLE IF NOT EXISTS `wiki` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `author` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `contents` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `date` date NOT NULL,
+                  `cate` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `mt` date NOT NULL,
+                  `likes` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ")->fetchAll();
+    }
+
+    /**
      * User: youranreus
      * Date: 2021/3/16 14:52
      * @param $page

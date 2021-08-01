@@ -17,6 +17,24 @@ class Note extends BaseController
     }
 
     /**
+     * @return array|false
+     * User: youranreus
+     * Date: 2021/8/1 11:16
+     */
+    public function initDB()
+    {
+        return $this->database->query("
+            CREATE TABLE IF NOT EXISTS `note` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `key` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `sid` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ")->fetchAll();
+    }
+
+    /**
      * @param $sid
      * @return array|false
      * User: youranreus

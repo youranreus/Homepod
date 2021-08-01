@@ -22,7 +22,6 @@ class Conf
     static $username = "root";
     static $password = "";
     static $dbname = "homepod";
-    static $tableList = ["wiki","item","note","dailysentence"];
 
     //function setting
     static $enableReg = true;

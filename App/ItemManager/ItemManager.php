@@ -23,6 +23,32 @@ class ItemManager extends BaseController
         ini_set('user_agent',Conf::$UserAgent);
     }
 
+    /**
+     * @return array|false
+     * User: youranreus
+     * Date: 2021/8/1 11:16
+     */
+    public function initDB()
+    {
+        return $this->database->query("
+                    CREATE TABLE IF NOT EXISTS `item` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      `price` float NOT NULL DEFAULT '0',
+                      `buydate` date NOT NULL,
+                      `from` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      `throwdate` date DEFAULT NULL,
+                      `buyer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      `cate` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      `tag` text COLLATE utf8mb4_unicode_ci,
+                      `desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      `link` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                      PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                ")->fetchAll();
+    }
+
+
 
     /**
      * User: youranreus
