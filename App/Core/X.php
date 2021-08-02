@@ -199,7 +199,7 @@ class X
      */
     public function getModuleList($enable = 1): array
     {
-        $data = scandir(dirname(__FILE__).'\..\/Module\/');
+        $data = scandir((dirname(__FILE__, 2) ."/Module"));
         $result = [];
         if($enable == 1)
             for($i = 2;$i<count($data);$i++)
@@ -213,7 +213,6 @@ class X
                 if($data[$i] != 'Conf' && $data[$i] != 'Core' && $data[$i] != 'Sec' && $data[$i] != 'R.php')
                     $result[] = $data[$i];
             }
-
         return $result;
     }
 
@@ -237,7 +236,7 @@ class X
      */
     private function getModuleInfo(string $Module = 'ItemManager')
     {
-        $dir = dirname(__FILE__).'\..\/Module\/'.$Module.'\/module.yml';
+        $dir = dirname(__FILE__, 2) ."/Module/".$Module."/module.yml";
         return (new Yaml())->parseFile($dir);
     }
 
