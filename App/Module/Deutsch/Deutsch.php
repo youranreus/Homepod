@@ -88,7 +88,7 @@ class Deutsch extends BaseController
             $result = $this->cache->readCache("DSentence");
             if(strtotime($result->date) == strtotime(date('Y-m-d')))
             {
-                exit(json_encode($result));
+                return $result;
             }
         }
 
