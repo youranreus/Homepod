@@ -237,6 +237,8 @@ class X
     private function getModuleInfo(string $Module = 'ItemManager')
     {
         $dir = dirname(__FILE__, 2) ."/Module/".$Module."/module.yml";
+        if(!is_file($dir))
+            return false;
         return (new Yaml())->parseFile($dir);
     }
 
