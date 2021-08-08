@@ -234,7 +234,7 @@ class X
      * User: youranreus
      * Date: 2021/7/31 15:28
      */
-    private function getModuleInfo(string $Module = 'ItemManager')
+    public function getModuleInfo(string $Module = 'ItemManager')
     {
         $dir = dirname(__FILE__, 2) ."/Module/".$Module."/module.yml";
         if(!is_file($dir))
