@@ -22,6 +22,7 @@ class R
         Router::get('X/getSites', 'App\Core\X@getSites');
         Router::get('X/getBlogRSS', 'App\Core\X@getBlogRSS');
         Router::get('X/tableCheck','App\Core\X@fixDBTable');
+        Router::get('X/getModuleList','App\Core\X@getModuleList');
 
         Router::error(function() {
             return ["msg"=>Conf::$msgOn404];
