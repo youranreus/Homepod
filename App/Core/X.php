@@ -260,4 +260,14 @@ class X
         }
     }
 
+    /**
+     * @return false|string
+     * User: youranreus
+     * Date: 2021/9/5 22:39
+     */
+    public function getProfileData()
+    {
+        return json_decode(file_get_contents(dirname(__FILE__, 2).'/Conf/profile.json'));
+    }
+
 }

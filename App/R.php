@@ -24,6 +24,7 @@ class R
         Router::get('X/tableCheck','App\Core\X@fixDBTable');
         Router::get('X/getModuleList','App\Core\X@getModuleList');
         Router::get('X/getModuleInfo/(:any)','App\Core\X@getModuleInfo');
+        Router::get('X/getProfileData','App\Core\X@getProfileData');
 
         Router::error(function() {
             return ["msg"=>Conf::$msgOn404];
