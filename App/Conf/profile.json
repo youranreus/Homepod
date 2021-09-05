@@ -1,0 +1,94 @@
+{
+  "api": "https://i.exia.xyz",
+  "home": {
+    "username": "季悠然",
+    "avatar": "https://sdn.geekzu.org/avatar/87e0f8d2f0f70987061cec6376cb7f97?s=200&r=G&d=",
+    "detail": "Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！",
+    "footer": "<p> © Project EXIA made with ❤️ by 季悠然<br> <a href=\"http://beian.miit.gov.cn\">粤ICP备19008557号</a> | <a href=\"https://icp.gov.moe\" target=\"_blank\">萌ICP备 </a><a href=\"https://icp.gov.moe/?keyword=20214396\" target=\"_blank\" > 20214396号</a></p>"
+  },
+  "about": {
+    "README": {
+      "content": "零二年生少年\uD83E\uDDD1，坐标深圳技术大学\uD83C\uDFEB。 爱好是 踢球⚽ 做饭\uD83D\uDC68\u200D\uD83C\uDF73 发呆\uD83D\uDE36。平时喜欢做计划，在意仪式感。",
+      "link": "https://gundam.exia.xyz/about.html"
+    },
+    "characteristic": [
+      {
+        "icon": "fa-thumbs-up",
+        "color": "#dd001b",
+        "title": "金标认证",
+        "hover": "Made in China"
+      },
+      {
+        "icon": "fa-language",
+        "color": "RGB(100, 147, 175)",
+        "title": "五 语 精 通",
+        "hover": "中 粤 日 英 德"
+      },
+      {
+        "icon": "fa-television",
+        "color": "RGB(197, 105, 120)",
+        "title": "日本番剧爱好者",
+        "hover": "简称二次元"
+      }
+    ],
+    "img": "https://cdn.exia.xyz/img/blog/kal.webp",
+    "video": "https://cdn.exia.xyz/video/blog/bilibili_summer_cut_min.webm",
+    "links": [
+      {
+        "color": "#1a638a",
+        "logo": "",
+        "title": "blog",
+        "url": "https://gundam.exia.xyz"
+      },
+      {
+        "color": "#f08198",
+        "logo": "",
+        "title": "Bilibili",
+        "url": "https://space.bilibili.com/11255354"
+      },
+      {
+        "color": "linear-gradient(203.2deg,#37aee2 21.67%,#1e96c8 70%)",
+        "logo": "",
+        "title": "TG",
+        "url": "https://t.me/@youranreus"
+      },
+      {
+        "color": "#84182f",
+        "logo": "",
+        "title": "SZTU",
+        "url": "https://www.sztu.edu.cn"
+      }
+    ],
+    "skill": [
+      {
+        "title": "PHP",
+        "icon": "fa-cube",
+        "percent": 0
+      },
+      {
+        "title": "Javascript",
+        "icon": "fa-code",
+        "percent": 0
+      },
+      {
+        "title": "HTML",
+        "icon": "fa-html5",
+        "percent": 0
+      },
+      {
+        "title": "CSS",
+        "icon": "fa-cogs",
+        "percent": 0
+      },
+      {
+        "title": "MoYu Skill",
+        "icon": "fa-youtube-play",
+        "percent": 100
+      }
+    ],
+    "github": ["https://github-readme-stats.vercel.app/api?theme=dracula&username=youranreus","https://github.com/youranreus"]
+  },
+  "system": {
+    "sentence": "听说我要写BUG，爷爷奶奶可高兴啦，给我买了最爱吃的Vue入门指南"
+  }
+}
