@@ -10,7 +10,7 @@ class Conf
     static $Owner = "季悠然";
     static $key = '1234567';
     static $websites = [
-        array("博客","https://gundam.exia.xyz",true),
+        array("博客","https://blog.mitsuha.space",true),
         array("博客新手村","https://imouto.tech",true),
         array("个人主页","https://xn--18su5j71q.space",true),
         array("番剧仓库","https://od.imouto.tech",false),

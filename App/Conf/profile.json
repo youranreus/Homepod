@@ -1,7 +1,6 @@
 {
-  "api": "https://i.exia.xyz",
   "home": {
-    "username": "季悠然",
+    "username": "Youranreus",
     "avatar": "https://sdn.geekzu.org/avatar/87e0f8d2f0f70987061cec6376cb7f97?s=200&r=G&d=",
     "detail": "Ich bin ein Student von SZTU, Learning Computer Science. 今、日本语とドイツ語を勉强しています！",
     "footer": "<p> © Project EXIA made with ❤️ by 季悠然<br> <a href=\"http://beian.miit.gov.cn\">粤ICP备19008557号</a> | <a href=\"https://icp.gov.moe\" target=\"_blank\">萌ICP备 </a><a href=\"https://icp.gov.moe/?keyword=20214396\" target=\"_blank\" > 20214396号</a></p>"
@@ -38,7 +37,7 @@
         "color": "#1a638a",
         "logo": "",
         "title": "blog",
-        "url": "https://gundam.exia.xyz"
+        "url": "https://blog.mitsuha.space"
       },
       {
         "color": "#f08198",

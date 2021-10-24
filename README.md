@@ -83,3 +83,4 @@ route:
       Deutsch/dailySentence: App\Module\Deutsch\Deutsch@dailySentence
       Deutsch/search/(:any): App\Module\Deutsch\Deutsch@search
 ```
+
