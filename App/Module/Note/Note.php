@@ -42,10 +42,13 @@ class Note extends BaseController
      */
     public function getNote($sid)
     {
-        if($this->database->has("note", ["sid"=>$sid]))
-            return $this->database->select("note", ["content"], [
+        if($this->database->has("note", ["sid"=>$sid])) {
+            $result = $this->database->select("note", ["content"], [
                 "sid" => $sid
             ]);
+            $result[0]["lock"] = $this->haveKey($sid) != '';
+            return $result;
+        }
         else
             return $this->createNote($sid);
     }
@@ -66,7 +69,7 @@ class Note extends BaseController
             "key"=> $key
         ]);
 
-        return ["content"=>"Begin your story.","key"=>$key];
+        return ["content"=>"Begin your story.","key"=>$key,"lock"=> $key != ''];
     }
 
     /**
