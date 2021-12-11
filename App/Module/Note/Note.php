@@ -87,7 +87,7 @@ class Note extends BaseController
      */
     public function deleteNote($sid): int
     {
-        $this->checkKey($sid);
+        $this->checkKey($this->haveKey($sid));
 
         $data = $this->database->delete("note", [
             "sid"=>$sid
