@@ -42,18 +42,12 @@ class Note extends BaseController
      */
     public function getNote($sid)
     {
-
         if($this->database->has("note", ["sid"=>$sid]))
-        {
             return $this->database->select("note", ["content"], [
                 "sid" => $sid
             ]);
-        }
         else
-        {
-            exit(json_encode($this->createNote($sid)));
-        }
-
+            return $this->createNote($sid);
     }
 
     /**
@@ -64,25 +58,25 @@ class Note extends BaseController
      */
     public function createNote($sid): array
     {
-        $key = $this->createKey();
+        $key = $_GET['key'] ?? '';
+
         $this->database->insert("note",[
             "sid"=>$sid,
             "content"=>"Begin your story.",
-            "key"=> ""
+            "key"=> $key
         ]);
 
-        return ["content"=>"Begin your story.","key"=>""];
+        return ["content"=>"Begin your story.","key"=>$key];
     }
 
     /**
-     * @param int $length
      * @return false|string
      * User: youranreus
      * Date: 2021/3/23 16:40
      */
-    private function createKey($length=5)
+    private function createKey()
     {
-        return substr(md5(time()), 0, $length);
+        return substr(md5(time()), 0, 5);
     }
 
     /**
@@ -110,25 +104,16 @@ class Note extends BaseController
      */
     public function modifyNote($sid)
     {
-
         $haveKey = $this->haveKey($sid);
         if($haveKey != false)
-        {
             $this->checkKey($haveKey);
-        }
         else
-        {
             $this->database->update("note",["key"=>$_GET["key"]],["sid"=>$sid]);
-        }
-
 
         if(!isset($_POST["content"]))
-        {
             return ["msg"=>Conf::$msgOnParamMissing];
-        }
 
         $result = $this->database->update("note",["content"=>$_POST["content"]],["sid"=>$sid]);
-
         return $result->rowCount();
     }
 
@@ -140,13 +125,9 @@ class Note extends BaseController
     private function checkKey($key)
     {
         if(!isset($_GET["key"]))
-        {
             exit(json_encode(["msg"=>Conf::$msgOnKeyMissing]));
-        }
         if ($key != $_GET["key"])
-        {
             exit(json_encode(["msg"=>Conf::$msgOnKeyError]));
-        }
     }
 
     /**
@@ -160,9 +141,7 @@ class Note extends BaseController
     {
         $key = $this->database->select("note","key",['sid'=>$sid]);
         if($key[0] != "")
-        {
             return $key[0];
-        }
         return false;
     }
 
