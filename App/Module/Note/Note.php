@@ -69,7 +69,7 @@ class Note extends BaseController
             "key"=> $key
         ]);
 
-        return ["content"=>"Begin your story.","key"=>$key,"lock"=> $key != ''];
+        return ["content"=>"Begin your story.","key"=>$key,"lock"=> $key != '',"id"=>$sid];
     }
 
     /**
