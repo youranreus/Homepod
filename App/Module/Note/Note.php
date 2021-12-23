@@ -9,6 +9,11 @@ class Note extends BaseController
 {
 
     /**
+     * @var NoteModel 便签模型对象
+     */
+    private $note;
+
+    /**
      * Note constructor.
      */
     public function __construct()
@@ -36,50 +41,14 @@ class Note extends BaseController
 
     /**
      * @param $sid
-     * @return array|false
+     * @return array
      * User: youranreus
      * Date: 2021/7/25 19:42
      */
-    public function getNote($sid)
+    public function getNote($sid): array
     {
-        if($this->database->has("note", ["sid"=>$sid])) {
-            $result = $this->database->select("note", ["content"], [
-                "sid" => $sid
-            ]);
-            $result[0]["lock"] = $this->haveKey($sid) != '';
-            return $result;
-        }
-        else
-            return $this->createNote($sid);
-    }
-
-    /**
-     * @param $sid
-     * @return array
-     * User: youranreus
-     * Date: 2021/3/23 16:42
-     */
-    public function createNote($sid): array
-    {
-        $key = $_GET['key'] ?? '';
-
-        $this->database->insert("note",[
-            "sid"=>$sid,
-            "content"=>"Begin your story.",
-            "key"=> $key
-        ]);
-
-        return ["content"=>"Begin your story.","key"=>$key,"lock"=> $key != '',"id"=>$sid];
-    }
-
-    /**
-     * @return false|string
-     * User: youranreus
-     * Date: 2021/3/23 16:40
-     */
-    private function createKey()
-    {
-        return substr(md5(time()), 0, 5);
+        $this->note = new NoteModel($sid);
+        return $this->note->getAll();
     }
 
     /**
@@ -90,15 +59,12 @@ class Note extends BaseController
      */
     public function deleteNote($sid): int
     {
-        $haveKey = $this->haveKey($sid);
-        if($haveKey != false)
-            $this->checkKey($haveKey);
+        $this->note = new NoteModel($sid);
+        $data = $this->note->getAll();
+        if($data["lock"])
+            $this->checkKey($data["key"]);
 
-        $data = $this->database->delete("note", [
-            "sid"=>$sid
-        ]);
-
-        return $data->rowCount();
+        return $this->note->delete() ? 1 : 0;
     }
 
     /**
@@ -109,17 +75,19 @@ class Note extends BaseController
      */
     public function modifyNote($sid)
     {
-        $haveKey = $this->haveKey($sid);
-        if($haveKey != false)
-            $this->checkKey($haveKey);
+        $this->note = new NoteModel($sid);
+        $data = $this->note->getAll();
+        if($data["lock"])
+            $this->checkKey($data["key"]);
         else
-            $this->database->update("note",["key"=>$_GET["key"]],["sid"=>$sid]);
+            $this->note->setKey($_GET['key']);
 
         if(!isset($_POST["content"]))
             return ["msg"=>Conf::$msgOnParamMissing];
 
-        $result = $this->database->update("note",["content"=>$_POST["content"]],["sid"=>$sid]);
-        return $result->rowCount();
+        $this->note->setContent($_POST['content']);
+
+        return $this->note->update() ? 1 : 0;
     }
 
     /**
@@ -134,21 +102,5 @@ class Note extends BaseController
         if ($key != $_GET["key"])
             exit(json_encode(["msg"=>Conf::$msgOnKeyError]));
     }
-
-    /**
-     * @param $sid
-     * @return bool
-     * User: youranreus
-     * Date: 2021/3/24 19:22
-     * @noinspection PhpMissingReturnTypeInspection
-     */
-    private function haveKey($sid)
-    {
-        $key = $this->database->select("note","key",['sid'=>$sid]);
-        if($key[0] != "")
-            return $key[0];
-        return false;
-    }
-
 
 }
