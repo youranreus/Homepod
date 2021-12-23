@@ -1,38 +1,58 @@
 <?php
 
 namespace App\Model;
-use App\Conf\Conf;
-use Medoo\Medoo;
+use App\Core\BaseModel;
 
-class User
+class User extends BaseModel
 {
+    /**
+     * @var int userid
+     */
     protected $id;
-    protected $name;
-    protected $email;
-    protected $avatar;
-    protected $role;
-    protected $token;
-    protected $pwd;
-    protected $expired;
 
-    protected $database;
+    /**
+     * @var string 用户名
+     */
+    protected $name;
+
+    /**
+     * @var string 邮箱
+     */
+    protected $email;
+
+    /**
+     * @var string 头像
+     */
+    protected $avatar;
+
+    /**
+     * @var string 角色
+     */
+    protected $role;
+
+    /**
+     * @var mixed 用户token
+     */
+    protected $token;
+
+    /**
+     * @var string 用户密码
+     */
+    protected $pwd;
+
+    /**
+     * @var mixed token过期时间
+     */
+    protected $expired;
 
     /**
      * @param int $id
      */
-    public function __construct(int $id = 1)
+    public function __construct(int $id)
     {
-        $this->database = new medoo([
-            'database_type' => 'mysql',
-            'database_name' => Conf::$dbname,
-            'server' => Conf::$servername,
-            'username' => Conf::$username,
-            'password' => Conf::$password,
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_general_ci',
-        ]);
+        parent::__construct();
         $this->id = $id;
-        $meta = $this->database->select('user','*',['id'=>$id])[0];
+        $meta = $this->database->get('user','*',['id'=>$id]);
         $this->name = $meta['name'];
         $this->avatar = $meta['avatar'];
         $this->email = $meta['email'];
