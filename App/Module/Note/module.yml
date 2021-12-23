@@ -1,9 +1,10 @@
 name: Note
-des: 笔记
+des: 便签
 enable: true
 func:
-  - 新增笔记
-  - 修改笔记
+  - 新增便签
+  - 修改便签
+  - 删除便签
 route:
   - get:
       note/get/(:any): App\Module\Note\Note@getNote
