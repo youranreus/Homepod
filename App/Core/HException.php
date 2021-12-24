@@ -2,10 +2,17 @@
 
 namespace App\Core;
 
+use Throwable;
+
 class HException extends \Exception
 {
-    public function throwResponse($code, $http)
+    public function __construct($message = "", $code = 0,Throwable $previous = null)
     {
-        HTTP::throwError(["code"=>$code, "http"=>$http, "msg"=>$this->getMessage()]);
+        parent::__construct($message, $code, $previous);
+    }
+
+    public function throwResponse($code)
+    {
+        HTTP::throwError(["code" => $code, "http" => $this->getCode(), "msg" => $this->getMessage()]);
     }
 }

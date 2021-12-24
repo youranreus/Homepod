@@ -48,11 +48,6 @@ class HTTP
      */
     public static function throwError($error)
     {
-        // $error = [
-        //      "code"=>10001,
-        //      "http"=>401,
-        //      "msg"=>""
-        // ]
         http_response_code($error['http']);
         die(json_encode(['code'=>$error['code'], 'msg'=>$error['msg']]));
     }

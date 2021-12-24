@@ -2,8 +2,10 @@
 
 
 namespace App\Module\Note;
+
 use App\Conf\Conf;
 use App\Core\BaseController;
+use App\Core\HException;
 
 class Note extends BaseController
 {
@@ -48,59 +50,68 @@ class Note extends BaseController
     public function getNote($sid): array
     {
         $this->note = new NoteModel($sid);
-        return $this->note->getAll();
+        return ["code" => 200, "content" => $this->note->getAll()];
     }
 
     /**
      * @param $sid
-     * @return int
+     * @return array
      * User: youranreus
      * Date: 2021/7/25 19:43
      */
-    public function deleteNote($sid): int
+    public function deleteNote($sid): array
     {
         $this->note = new NoteModel($sid);
         $data = $this->note->getAll();
-        if($data["lock"])
-            $this->checkKey($data["key"]);
+        if ($data["lock"])
+            try {
+                $this->checkKey($data["key"]);
+            } catch (HException $e) {
+                $e->throwResponse($e->getCode());
+            }
 
-        return $this->note->delete() ? 1 : 0;
+        return ["code" => 200, "content" => $this->note->delete() ? 1 : 0];
     }
 
     /**
      * @param $sid
-     * @return array|int
+     * @return array
      * User: youranreus
      * Date: 2021/7/25 19:43
      */
-    public function modifyNote($sid)
+    public function modifyNote($sid): array
     {
         $this->note = new NoteModel($sid);
         $data = $this->note->getAll();
-        if($data["lock"])
-            $this->checkKey($data["key"]);
+        if ($data["lock"])
+            try {
+                $this->checkKey($data["key"]);
+            } catch (HException $e) {
+                $e->throwResponse($e->getCode());
+            }
         else
             $this->note->setKey($_GET['key']);
 
-        if(!isset($_POST["content"]))
-            return ["msg"=>Conf::$msgOnParamMissing];
+        if (!isset($_POST["content"]))
+            return ["msg" => Conf::$msgOnParamMissing];
 
         $this->note->setContent($_POST['content']);
 
-        return $this->note->update() ? 1 : 0;
+        return ["code" => 200, "content" => $this->note->update() ? 1 : 0];
     }
 
     /**
      * User: youranreus
      * Date: 2021/3/23 17:00
      * @param $key
+     * @throws HException
      */
     private function checkKey($key)
     {
-        if(!isset($_GET["key"]))
-            exit(json_encode(["msg"=>Conf::$msgOnKeyMissing]));
+        if (!isset($_GET["key"]))
+            throw new HException(Conf::$msgOnParamMissing,402);
         if ($key != $_GET["key"])
-            exit(json_encode(["msg"=>Conf::$msgOnKeyError]));
+            throw new HException(Conf::$msgOnKeyError,401);
     }
 
 }
