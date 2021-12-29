@@ -24,19 +24,23 @@ class HTTP
      * 解析返回结果
      *
      * @param $result
-     * @return array
      * User: youranreus
      * Date: 2021/12/24 8:53
      */
-    private static function analyzeResult($result): array
+    private static function analyzeResult($result)
     {
         //$result = [
         //    "code" => "",
         //    "http(?)" => 200,
         //    "content" => ""
         //];
-        if (isset($result["http"])) http_response_code($result["http"]);
-        return ["code" => $result["code"], "content" => $result["content"]];
+        if(is_array($result) && isset($result['code']) && $result['content'])
+        {
+            if (isset($result["http"])) http_response_code($result["http"]);
+            return ["code" => $result["code"], "content" => $result["content"]];
+        }
+
+        return $result;
     }
 
     /**
