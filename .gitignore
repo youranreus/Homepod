@@ -1,4 +1,4 @@
 /vendor/
 /cache/
 /.idea/
-/App/Module/*
+./App/Module/
