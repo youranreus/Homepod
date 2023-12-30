@@ -16,6 +16,7 @@ class BaseModel
             'server' => Conf::$servername,
             'username' => Conf::$username,
             'password' => Conf::$password,
+            'port' => Conf::$serverport,
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_general_ci',
         ]);

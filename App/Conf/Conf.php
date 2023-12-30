@@ -22,6 +22,7 @@ class Conf
     static $username = "root";
     static $password = "";
     static $dbname = "homepod";
+    static $serverport = 3306;
 
     //function setting
     static $enableReg = true;
@@ -57,7 +58,13 @@ class Conf
      */
     public static function setDB($arr): void
     {
-        self::$servername = $arr[0];
+        if (strstr($arr[0], ":")) {
+            self::$servername = explode($arr[0], ":")[0];
+            self::$serverport = explode($arr[0], ":")[0];
+        } else {
+            self::$servername = $arr[0];
+        }
+
         self::$username = $arr[1];
         self::$password = $arr[2];
         self::$dbname = $arr[3];

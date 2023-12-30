@@ -20,6 +20,7 @@ class DB
             'password' => Conf::$password,
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_general_ci',
+            'port' => Conf::$serverport,
         ]);
         $this->tableList = (new X())->getModuleList();
     }
