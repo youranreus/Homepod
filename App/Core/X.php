@@ -47,7 +47,7 @@ class X
      */
     public function DBCheck(): bool
     {
-        $conn = new mysqli(Conf::$servername, Conf::$username, Conf::$password);
+        $conn = new mysqli(Conf::$servername, Conf::$username, Conf::$password, Conf::$dbname, Conf::$serverport);
         // 检测连接
         if ($conn->connect_error) {
             return false;

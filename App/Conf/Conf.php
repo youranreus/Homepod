@@ -59,8 +59,8 @@ class Conf
     public static function setDB($arr): void
     {
         if (strstr($arr[0], ":")) {
-            self::$servername = explode($arr[0], ":")[0];
-            self::$serverport = explode($arr[0], ":")[0];
+            self::$servername = explode(":", $arr[0])[0];
+            self::$serverport = explode(":", $arr[0])[1];
         } else {
             self::$servername = $arr[0];
         }
